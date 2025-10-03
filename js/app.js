@@ -3,6 +3,7 @@ import { initNavigation } from './modules/navigation.js';
 import { initReportes } from './modules/reportes.js';
 import { initUsuarios } from './modules/usuarios.js';
 import { initModales } from './modules/modals.js';
+import { initEvaluaciones } from './modules/evaluaciones.js';
 
 document.addEventListener('DOMContentLoaded', () => {
   const crumb = document.getElementById('crumb');
@@ -13,6 +14,7 @@ document.addEventListener('DOMContentLoaded', () => {
   const btnNuevaAccion = document.getElementById('btnNuevaAccion');
 
   const modalApi = initModales();
+  const evaluacionesApi = initEvaluaciones({ modalApi });
   const navigation = initNavigation({
     onViewChange: (label) => {
       if (crumb) {
@@ -25,8 +27,10 @@ document.addEventListener('DOMContentLoaded', () => {
   initUsuarios();
   initLogin({ onLogout: navigation?.resetActiveView });
 
-  btnNew?.addEventListener('click', () => modalApi.openModal('Nueva evaluación'));
-  btnNuevaEval?.addEventListener('click', () => modalApi.openModal('Nueva evaluación'));
+  const handleNuevaEvaluacion = () => evaluacionesApi?.openCreation?.();
+
+  btnNew?.addEventListener('click', handleNuevaEvaluacion);
+  btnNuevaEval?.addEventListener('click', handleNuevaEvaluacion);
   btnNuevaAccion?.addEventListener('click', () => modalApi.openModal('Nueva acción'));
 
   btnZip?.addEventListener('click', () => {
