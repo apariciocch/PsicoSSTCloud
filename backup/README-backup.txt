@@ -1,0 +1,1 @@
+Backup automático de la estructura anterior del proyecto PsicoSST Cloud. Puedes restaurar los archivos si lo necesitas.
