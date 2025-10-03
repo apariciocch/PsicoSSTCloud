@@ -280,6 +280,7 @@
     <div class="actions">
       <button class="btn" id="btnNew">+ Nueva evaluación</button>
       <button class="btn primary" id="btnZip">⬇️ Carpeta SUNAFIL</button>
+      <button class="btn" id="btnLogout">Cerrar sesión</button>
     </div>
   </header>
 
@@ -594,6 +595,27 @@
     const userField = document.getElementById('login-username');
     const passField = document.getElementById('login-password');
     const credentials = { username: 'Armando', password: 'admin' };
+    const logoutButton = document.getElementById('btnLogout');
+
+    const showApp = ()=>{
+      loginError.textContent = '';
+      loginScreen.style.display = 'none';
+      app.style.display = 'grid';
+      passField.value = '';
+    };
+
+    const logout = ()=>{
+      sessionStorage.removeItem('psicosst-session');
+      app.style.display = 'none';
+      loginScreen.style.display = 'grid';
+      loginForm.reset();
+      loginError.textContent = '';
+      setTimeout(()=> userField.focus(), 100);
+    };
+
+    if (logoutButton) {
+      logoutButton.addEventListener('click', logout);
+    }
 
     if (sessionStorage.getItem('psicosst-session') !== 'active') {
       setTimeout(()=> userField.focus(), 100);
@@ -602,6 +624,7 @@
     const tryAutoLogin = ()=>{
       const savedSession = sessionStorage.getItem('psicosst-session');
       if (savedSession === 'active') {
+        showApp();
         loginScreen.style.display = 'none';
         app.style.display = 'grid';
         userField.value = credentials.username;
@@ -616,6 +639,9 @@
       const password = passField.value;
 
       if (username.toLowerCase() === credentials.username.toLowerCase() && password === credentials.password) {
+        showApp();
+        sessionStorage.setItem('psicosst-session', 'active');
+        passField.value = '';
         loginError.textContent = '';
         loginScreen.style.display = 'none';
         app.style.display = 'grid';
