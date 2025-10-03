@@ -1,0 +1,539 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>SaaS Psicosocial – Demo UI</title>
+<style>
+  :root{
+    --bg:#0b1220;
+    --bg-soft:#0e1526;
+    --card:#121a2e;
+    --card-2:#141e36;
+    --primary:#5b9cff;
+    --primary-2:#80b3ff;
+    --ok:#49d18e;
+    --warn:#ffd166;
+    --danger:#ff6b6b;
+    --text:#e6ecff;
+    --muted:#aab6d3;
+    --line:#202a44;
+    --shadow: 0 10px 30px rgba(0,0,0,.35);
+    --radius:18px;
+  }
+  *{box-sizing:border-box}
+  html,body{height:100%}
+  body{
+    margin:0;
+    color:var(--text);
+    background:linear-gradient(180deg,#0a1120 0%, #0d1630 100%);
+    font: 15px/1.55 system-ui, -apple-system, Segoe UI, Roboto, Inter, "Helvetica Neue", Arial, "Noto Sans", "Apple Color Emoji","Segoe UI Emoji";
+  }
+
+  /* Layout */
+  .app{
+    display:grid;
+    grid-template-columns: 280px 1fr;
+    grid-template-rows: 64px 1fr;
+    grid-template-areas:
+      "sidebar topbar"
+      "sidebar main";
+    min-height:100dvh;
+  }
+  .sidebar{
+    grid-area:sidebar;
+    border-right:1px solid var(--line);
+    background:linear-gradient(180deg, #0f1730 0%, #0b1220 100%);
+    padding:16px;
+    position:sticky; top:0; height:100dvh;
+  }
+  .brand{
+    display:flex; align-items:center; gap:12px; margin-bottom:12px;
+  }
+  .logo{
+    width:38px; height:38px; border-radius:14px;
+    background: radial-gradient(120% 120% at 10% 0%, var(--primary) 0%, #3a64ff 40%, #1b2450 100%);
+    box-shadow: 0 6px 20px rgba(91,156,255,.35), inset 0 0 30px rgba(255,255,255,.05);
+  }
+  .brand h1{font-size:15px; margin:0}
+  .muted{color:var(--muted)}
+  .sidebar .search{
+    display:flex; gap:8px; margin:12px 0 16px;
+    background:var(--bg); border:1px solid var(--line); border-radius:12px; padding:8px 10px;
+  }
+  .sidebar input{
+    flex:1; background:transparent; border:0; color:var(--text); outline:none;
+  }
+  .menu{
+    display:flex; flex-direction:column; gap:6px;
+    padding-top:8px;
+  }
+  .menu .item{
+    display:flex; align-items:center; gap:12px;
+    padding:10px 12px; border-radius:12px; cursor:pointer;
+    color:var(--muted); border:1px solid transparent;
+  }
+  .menu .item:hover{ background: #0f1933; border-color: #1b2650; color:var(--text)}
+  .menu .item.active{ background: linear-gradient(180deg,#122147,#0e1835); border-color:#263460; color:var(--text)}
+  .tag{margin-left:auto; font-size:12px; padding:.5px 8px; border-radius:99px; background:#142246; color:#9bb7ff; border:1px solid #273a78}
+
+  .topbar{
+    grid-area:topbar;
+    display:flex; align-items:center; justify-content:space-between;
+    padding:12px 18px; border-bottom:1px solid var(--line); backdrop-filter: blur(6px);
+    position:sticky; top:0; z-index:5;
+  }
+  .crumbs{display:flex; gap:10px; align-items:center; color:var(--muted)}
+  .actions{display:flex; gap:8px}
+  .btn{
+    background: var(--card-2); border:1px solid #24325b; color:var(--text);
+    padding:8px 12px; border-radius:12px; cursor:pointer;
+  }
+  .btn.primary{
+    background: linear-gradient(180deg, var(--primary) 0%, #3d7dff 100%);
+    color:#07122b; border:0; font-weight:700; box-shadow: 0 6px 16px rgba(91,156,255,.35);
+  }
+
+  .main{
+    grid-area:main;
+    padding:18px; overflow:auto;
+  }
+
+  /* Cards / grids */
+  .grid{
+    display:grid; gap:16px;
+    grid-template-columns: repeat(12,1fr);
+  }
+  .card{
+    background: linear-gradient(180deg, #121a31 0%, #10182c 100%);
+    border:1px solid var(--line); border-radius: var(--radius); padding:16px; box-shadow: var(--shadow);
+  }
+  .card h3{margin:0 0 8px; font-size:16px}
+  .kpi{
+    display:flex; align-items:center; justify-content:space-between;
+    padding:10px; border:1px solid #24325b; border-radius:14px; background:#0e1730;
+  }
+  .kpi b{font-size:22px}
+  .pill{padding:4px 8px; border-radius:999px; font-size:12px; border:1px solid #273a78; color:#9bb7ff; background:#141e39}
+  .ok{background:#0f2a22; border-color:#114c3a; color:#85f3c1}
+  .warn{background:#2a220f; border-color:#4c3a11; color:#ffe09a}
+  .danger{background:#2a1111; border-color:#4c1111; color:#ff9b9b}
+
+  /* Table */
+  .table{
+    width:100%; border-collapse: collapse; border:1px solid var(--line); overflow:hidden; border-radius:14px;
+  }
+  .table th, .table td{
+    padding:10px 12px; border-bottom:1px solid #1a2544; text-align:left;
+  }
+  .table thead th{ background:#0f1833; color:#9bb7ff; position:sticky; top:0}
+  .table tr:hover td{ background:#0e1630}
+
+  /* Toolbar */
+  .toolbar{display:flex; gap:10px; align-items:center; flex-wrap:wrap; margin-bottom:10px}
+  .input, select{
+    background:#0e1730; border:1px solid #24325b; color:var(--text);
+    padding:8px 10px; border-radius:10px; outline:none;
+  }
+
+  /* Tabs (secondary) */
+  .tabs{display:flex; gap:8px; margin-bottom:10px; flex-wrap:wrap}
+  .tab{padding:8px 12px; border-radius:10px; border:1px solid #24325b; background:#0e1730; color:var(--muted); cursor:pointer}
+  .tab.active{background:#132044; color:var(--text); border-color:#3753a6}
+
+  /* Badges */
+  .badge{font-size:12px; padding:4px 8px; border-radius:999px; border:1px solid #24325b; color:#b9c6ef; background:#111a33}
+
+  /* Modal */
+  .modal-bg{
+    position:fixed; inset:0; background:rgba(0,0,0,.55); display:none; place-items:center; z-index:20;
+  }
+  .modal{
+    width:min(720px, 92vw); background:var(--card); border:1px solid var(--line);
+    border-radius:18px; padding:16px; box-shadow: var(--shadow);
+  }
+  .modal h3{margin:0 0 6px}
+  .modal .row{display:grid; grid-template-columns:1fr 1fr; gap:10px}
+  .modal label{font-size:13px; color:var(--muted)}
+  .modal textarea, .modal input, .modal select{
+    width:100%; background:#0e1730; border:1px solid #24325b; color:var(--text);
+    padding:8px 10px; border-radius:10px; outline:none;
+  }
+
+  /* Hide views by default */
+  .view{display:none}
+  .view.active{display:block}
+
+  /* Responsive */
+  @media (max-width: 980px){
+    .app{grid-template-columns: 1fr; grid-template-rows: 64px auto 1fr; grid-template-areas:
+      "topbar" "sidebar" "main";}
+    .sidebar{position:static; height:auto}
+  }
+
+</style>
+</head>
+<body>
+<div class="app">
+  <!-- SIDEBAR -->
+  <aside class="sidebar">
+    <div class="brand">
+      <div class="logo" aria-hidden="true"></div>
+      <div>
+        <h1>PsicoSST Cloud</h1>
+        <div class="muted">Gestión Psicosocial</div>
+      </div>
+    </div>
+
+    <div class="search" role="search">
+      🔎 <input id="q" placeholder="Buscar módulo o empresa…" />
+    </div>
+
+    <nav class="menu" id="menu">
+      <div class="item active" data-view="dashboard">📊 Dashboard</div>
+      <div class="item" data-view="evaluaciones">📝 Evaluaciones</div>
+      <div class="item" data-view="reportes">📄 Reportes</div>
+      <div class="item" data-view="carpeta">🗂 Carpeta Legal</div>
+      <div class="item" data-view="plan">✅ Plan de Acción <span class="tag">4 pendientes</span></div>
+      <div class="item" data-view="capacitaciones">🎓 Capacitaciones</div>
+      <div class="item" data-view="casos">🔒 Casos</div>
+      <div class="item" data-view="usuarios">👥 Usuarios</div>
+      <div class="item" data-view="config">⚙️ Configuración</div>
+    </nav>
+
+    <div style="margin-top:16px; border-top:1px solid var(--line); padding-top:12px">
+      <div class="muted" style="font-size:12px">© 2025 Dinámica Operativa</div>
+    </div>
+  </aside>
+
+  <!-- TOPBAR -->
+  <header class="topbar">
+    <div class="crumbs">
+      <span id="crumb">Dashboard</span>
+      <span class="muted">/</span>
+      <span class="muted">Demo visual</span>
+    </div>
+    <div class="actions">
+      <button class="btn" id="btnNew">+ Nueva evaluación</button>
+      <button class="btn primary" id="btnZip">⬇️ Carpeta SUNAFIL</button>
+    </div>
+  </header>
+
+  <!-- MAIN -->
+  <main class="main">
+    <!-- DASHBOARD -->
+    <section class="view active" id="view-dashboard" aria-label="Dashboard">
+      <div class="grid" style="grid-template-columns: repeat(12, 1fr)">
+        <div class="card" style="grid-column: span 4">
+          <h3>Participación</h3>
+          <div class="kpi"><span>Encuestas respondidas</span><b>128</b><span class="pill ok">82% tasa</span></div>
+        </div>
+        <div class="card" style="grid-column: span 4">
+          <h3>Riesgo global</h3>
+          <div class="kpi"><span>Nivel</span><b>Medio</b><span class="pill warn">Atender</span></div>
+        </div>
+        <div class="card" style="grid-column: span 4">
+          <h3>Casos abiertos</h3>
+          <div class="kpi"><span>Confidenciales</span><b>5</b><span class="pill danger">3 urgentes</span></div>
+        </div>
+
+        <div class="card" style="grid-column: span 8">
+          <h3>Mapa de calor por áreas</h3>
+          <div style="height:220px; border:1px dashed #24325b; border-radius:12px; display:grid; place-items:center; color:var(--muted)">
+            (Placeholder de gráfico)
+          </div>
+        </div>
+        <div class="card" style="grid-column: span 4">
+          <h3>Alertas</h3>
+          <ul style="margin:0; padding-left:16px">
+            <li>Capacitación “Manejo del Estrés” vence en 10 días</li>
+            <li>Reevaluación Área Ventas – 30/10/2025</li>
+            <li>3 acciones correctivas retrasadas</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- EVALUACIONES -->
+    <section class="view" id="view-evaluaciones" aria-label="Evaluaciones">
+      <div class="card">
+        <div class="toolbar">
+          <button class="btn primary" id="btnNuevaEval">+ Crear evaluación</button>
+          <select>
+            <option>MINSA 2024</option>
+            <option>COPSOQ (base)</option>
+            <option>ISTAS21 (referencial)</option>
+          </select>
+          <input class="input" placeholder="Filtrar por área/puesto…" />
+          <span class="badge">128 respondidas</span>
+        </div>
+        <table class="table">
+          <thead><tr><th>Evaluación</th><th>Área</th><th>Periodo</th><th>Estado</th><th>Acciones</th></tr></thead>
+          <tbody>
+            <tr><td>MINSA 2024</td><td>Atención al Cliente</td><td>Oct-2025</td><td><span class="pill warn">En curso</span></td><td><button class="btn">Ver</button></td></tr>
+            <tr><td>COPSOQ</td><td>Ventas</td><td>Sep-2025</td><td><span class="pill ok">Completado</span></td><td><button class="btn">Resultados</button></td></tr>
+            <tr><td>MINSA 2024</td><td>Operaciones</td><td>Ago-2025</td><td><span class="pill ok">Completado</span></td><td><button class="btn">PDF</button></td></tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- REPORTES -->
+    <section class="view" id="view-reportes" aria-label="Reportes">
+      <div class="card">
+        <div class="tabs" id="tabs-reportes">
+          <div class="tab active" data-tab="global">Global</div>
+          <div class="tab" data-tab="individuales">Individuales</div>
+          <div class="tab" data-tab="comparativos">Comparativos</div>
+        </div>
+        <div id="panel-global">
+          <p class="muted">Resumen global por dimensiones (placeholder):</p>
+          <div class="grid" style="grid-template-columns: repeat(12, 1fr)">
+            <div class="kpi" style="grid-column: span 4"><span>Carga mental</span><b>Alto</b><span class="pill danger">Prioridad</span></div>
+            <div class="kpi" style="grid-column: span 4"><span>Liderazgo</span><b>Medio</b><span class="pill warn">Mejorar</span></div>
+            <div class="kpi" style="grid-column: span 4"><span>Clima</span><b>Bajo</b><span class="pill ok">Satisfactorio</span></div>
+          </div>
+          <div style="height:220px; margin-top:12px; border:1px dashed #24325b; border-radius:12px; display:grid; place-items:center; color:var(--muted)">(Placeholder gráfico barras)</div>
+        </div>
+        <div id="panel-individuales" style="display:none">
+          <p class="muted">Listado de informes individuales (placeholder):</p>
+          <table class="table">
+            <thead><tr><th>Código</th><th>Área</th><th>Nivel</th><th>Informe</th></tr></thead>
+            <tbody>
+              <tr><td>EMP-0001</td><td>Ventas</td><td><span class="pill warn">Medio</span></td><td><button class="btn">Descargar PDF</button></td></tr>
+              <tr><td>EMP-0002</td><td>Operaciones</td><td><span class="pill ok">Bajo</span></td><td><button class="btn">Descargar PDF</button></td></tr>
+              <tr><td>EMP-0003</td><td>At. Cliente</td><td><span class="pill danger">Alto</span></td><td><button class="btn">Descargar PDF</button></td></tr>
+            </tbody>
+          </table>
+        </div>
+        <div id="panel-comparativos" style="display:none">
+          <p class="muted">Comparativa por periodos/áreas (placeholder):</p>
+          <div style="height:220px; border:1px dashed #24325b; border-radius:12px; display:grid; place-items:center; color:var(--muted)">(Placeholder línea temporal)</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- CARPETA LEGAL -->
+    <section class="view" id="view-carpeta" aria-label="Carpeta Legal">
+      <div class="card">
+        <h3>Carpeta Legal Psicosocial (SUNAFIL)</h3>
+        <p class="muted">Estructura sugerida. El botón superior “⬇️ Carpeta SUNAFIL” simula la descarga del ZIP.</p>
+        <ul>
+          <li>01_Informe_Consolidado.pdf</li>
+          <li>02_Informes_Individuales/</li>
+          <li>03_Plan_de_Accion.xlsx</li>
+          <li>04_Actas_Comite_SST/</li>
+          <li>05_Capacitaciones/</li>
+          <li>06_Evidencias/</li>
+          <li>07_Politicas_y_Reglamento_SST/</li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- PLAN DE ACCIÓN -->
+    <section class="view" id="view-plan" aria-label="Plan de Acción">
+      <div class="card">
+        <div class="toolbar">
+          <button class="btn primary" id="btnNuevaAccion">+ Nueva acción</button>
+          <select><option>Todas las áreas</option><option>Ventas</option><option>Operaciones</option></select>
+          <select><option>Todas</option><option>Pendiente</option><option>En curso</option><option>Completada</option></select>
+        </div>
+        <table class="table">
+          <thead><tr><th>Riesgo</th><th>Acción</th><th>Responsable</th><th>Vence</th><th>Estado</th></tr></thead>
+          <tbody>
+            <tr><td>Carga mental alta</td><td>Redistribuir turnos y establecer pausas</td><td>Jefe Operaciones</td><td>20/10/2025</td><td><span class="pill warn">En curso</span></td></tr>
+            <tr><td>Liderazgo deficiente</td><td>Taller de feedback efectivo</td><td>RRHH</td><td>05/11/2025</td><td><span class="pill">Pendiente</span></td></tr>
+            <tr><td>Acoso reportado</td><td>Protocolo y mediación</td><td>Comité SST</td><td>Inmediato</td><td><span class="pill danger">Urgente</span></td></tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- CAPACITACIONES -->
+    <section class="view" id="view-capacitaciones" aria-label="Capacitaciones">
+      <div class="card">
+        <div class="toolbar">
+          <button class="btn" id="btnNuevaCap">+ Nueva capacitación</button>
+          <input class="input" placeholder="Buscar curso…" />
+          <span class="badge">Próximas: 2</span>
+        </div>
+        <table class="table">
+          <thead><tr><th>Curso</th><th>Fecha</th><th>Área</th><th>Inscritos</th><th>Acciones</th></tr></thead>
+          <tbody>
+            <tr><td>Manejo del Estrés</td><td>25/10/2025</td><td>Operaciones</td><td>22</td><td><button class="btn">Lista</button></td></tr>
+            <tr><td>Prevención de Acoso</td><td>08/11/2025</td><td>General</td><td>45</td><td><button class="btn">Lista</button></td></tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- CASOS -->
+    <section class="view" id="view-casos" aria-label="Casos">
+      <div class="card">
+        <div class="toolbar">
+          <span class="badge danger">5 abiertos</span>
+          <span class="badge ok">10 cerrados</span>
+        </div>
+        <table class="table">
+          <thead><tr><th>Código</th><th>Tipo</th><th>Estado</th><th>Última actualización</th><th></th></tr></thead>
+          <tbody>
+            <tr><td>CASE-0012</td><td>Acoso</td><td><span class="pill danger">Alta prioridad</span></td><td>02/10/2025</td><td><button class="btn">Ver</button></td></tr>
+            <tr><td>CASE-0013</td><td>Conflicto</td><td><span class="pill warn">En análisis</span></td><td>03/10/2025</td><td><button class="btn">Ver</button></td></tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- USUARIOS -->
+    <section class="view" id="view-usuarios" aria-label="Usuarios">
+      <div class="card">
+        <div class="toolbar">
+          <button class="btn" id="btnNuevoUser">+ Nuevo usuario</button>
+          <select>
+            <option>Todos los roles</option>
+            <option>Psicólogo</option>
+            <option>Empresa</option>
+            <option>Comité SST</option>
+            <option>Auditor (solo lectura)</option>
+          </select>
+        </div>
+        <table class="table">
+          <thead><tr><th>Nombre</th><th>Correo</th><th>Rol</th><th>Estado</th><th></th></tr></thead>
+          <tbody>
+            <tr><td>Armando Aparicio</td><td>armando@empresa.pe</td><td>Psicólogo</td><td><span class="pill ok">Activo</span></td><td><button class="btn">Editar</button></td></tr>
+            <tr><td>María Torres</td><td>maria@empresa.pe</td><td>Comité SST</td><td><span class="pill">Invitado</span></td><td><button class="btn">Reenviar</button></td></tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- CONFIGURACIÓN -->
+    <section class="view" id="view-config" aria-label="Configuración">
+      <div class="card">
+        <h3>Parámetros generales</h3>
+        <div class="grid" style="grid-template-columns: repeat(12, 1fr)">
+          <div style="grid-column: span 6">
+            <label>Nombre de la empresa</label>
+            <input class="input" placeholder="Ej. Dinámica Operativa SAC" />
+          </div>
+          <div style="grid-column: span 6">
+            <label>RUC</label>
+            <input class="input" placeholder="20XXXXXXXXX" />
+          </div>
+          <div style="grid-column: span 6">
+            <label>Instrumento por defecto</label>
+            <select><option>MINSA 2024</option><option>COPSOQ</option></select>
+          </div>
+          <div style="grid-column: span 6">
+            <label>Firma del psicólogo (texto)</label>
+            <input class="input" placeholder="Lic. Aparicio Armando Capcha Chávez – C.Ps.P XXXXX – Habilitado" />
+          </div>
+        </div>
+        <div style="margin-top:12px">
+          <button class="btn primary">Guardar</button>
+        </div>
+      </div>
+    </section>
+  </main>
+</div>
+
+<!-- MODALES -->
+<div class="modal-bg" id="modal-bg">
+  <div class="modal" role="dialog" aria-modal="true" aria-labelledby="modal-title">
+    <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:8px">
+      <h3 id="modal-title">Nueva evaluación</h3>
+      <button class="btn" id="modal-close">✖</button>
+    </div>
+    <div class="row">
+      <div>
+        <label>Instrumento</label>
+        <select>
+          <option>MINSA 2024</option>
+          <option>COPSOQ</option>
+          <option>ISTAS21 (ref.)</option>
+        </select>
+      </div>
+      <div>
+        <label>Área</label>
+        <input placeholder="Ej. Atención al Cliente" />
+      </div>
+      <div>
+        <label>Periodo</label>
+        <input type="month" />
+      </div>
+      <div>
+        <label>Modo</label>
+        <select><option>Anónimo</option><option>Identificado</option></select>
+      </div>
+      <div style="grid-column:1/-1">
+        <label>Notas</label>
+        <textarea rows="4" placeholder="Instrucciones para participantes…"></textarea>
+      </div>
+    </div>
+    <div style="display:flex; justify-content:flex-end; gap:8px; margin-top:12px">
+      <button class="btn" id="modal-cancel">Cancelar</button>
+      <button class="btn primary">Crear</button>
+    </div>
+  </div>
+</div>
+
+<script>
+  // Navegación entre vistas
+  const menu = document.getElementById('menu');
+  const views = [...document.querySelectorAll('.view')];
+  const crumb = document.getElementById('crumb');
+
+  menu.addEventListener('click', (e)=>{
+    const item = e.target.closest('.item');
+    if(!item) return;
+    menu.querySelectorAll('.item').forEach(i=>i.classList.remove('active'));
+    item.classList.add('active');
+    const target = item.dataset.view;
+    views.forEach(v => v.classList.toggle('active', v.id === 'view-'+target));
+    crumb.textContent = item.textContent.replace(/\s*\d*\s*pendientes/,'').trim();
+  });
+
+  // Tabs en Reportes
+  const tabs = document.getElementById('tabs-reportes');
+  if (tabs){
+    tabs.addEventListener('click', (e)=>{
+      const t = e.target.closest('.tab');
+      if(!t) return;
+      tabs.querySelectorAll('.tab').forEach(x=>x.classList.remove('active'));
+      t.classList.add('active');
+      const tab = t.dataset.tab;
+      document.getElementById('panel-global').style.display = tab==='global'?'block':'none';
+      document.getElementById('panel-individuales').style.display = tab==='individuales'?'block':'none';
+      document.getElementById('panel-comparativos').style.display = tab==='comparativos'?'block':'none';
+    });
+  }
+
+  // Modal genérico (reutilizado para "Nueva evaluación" / "Nueva acción" / etc.)
+  const modalBg = document.getElementById('modal-bg');
+  const openModal = (title='Nueva evaluación')=>{
+    document.getElementById('modal-title').textContent = title;
+    modalBg.style.display='grid';
+  };
+  const closeModal = ()=> modalBg.style.display='none';
+  document.getElementById('modal-close').onclick = closeModal;
+  document.getElementById('modal-cancel').onclick = closeModal;
+
+  document.getElementById('btnNew').onclick = ()=> openModal('Nueva evaluación');
+  const btnNuevaEval = document.getElementById('btnNuevaEval');
+  if (btnNuevaEval) btnNuevaEval.onclick = ()=> openModal('Nueva evaluación');
+  const btnNuevaAccion = document.getElementById('btnNuevaAccion');
+  if (btnNuevaAccion) btnNuevaAccion.onclick = ()=> openModal('Nueva acción');
+
+  // Simular descarga de carpeta SUNAFIL
+  document.getElementById('btnZip').onclick = ()=>{
+    alert('Se generará la Carpeta SUNAFIL (ZIP) con informes, plan, actas y evidencias.\n(Demo visual)');
+  };
+
+  // Búsqueda (demo)
+  const q = document.getElementById('q');
+  q.addEventListener('keydown', (e)=>{
+    if(e.key==='Enter') alert('Buscar: ' + q.value + '\n(Demo visual)');
+  });
+</script>
+</body>
+</html>
