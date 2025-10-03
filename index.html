@@ -625,6 +625,8 @@
       const savedSession = sessionStorage.getItem('psicosst-session');
       if (savedSession === 'active') {
         showApp();
+        loginScreen.style.display = 'none';
+        app.style.display = 'grid';
         userField.value = credentials.username;
       }
     };
@@ -640,6 +642,10 @@
         showApp();
         sessionStorage.setItem('psicosst-session', 'active');
         passField.value = '';
+        loginError.textContent = '';
+        loginScreen.style.display = 'none';
+        app.style.display = 'grid';
+        sessionStorage.setItem('psicosst-session', 'active');
       } else {
         loginError.textContent = 'Usuario o contraseña incorrectos. (Armando / admin)';
         passField.value = '';
