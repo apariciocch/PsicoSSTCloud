@@ -150,6 +150,7 @@ body{
 .ok{background:#0f2a22; border-color:#114c3a; color:#85f3c1}
 .warn{background:#2a220f; border-color:#4c3a11; color:#ffe09a}
 .danger{background:#2a1111; border-color:#4c1111; color:#ff9b9b}
+.info{background:#121f3d; border-color:#263a78; color:#b9c6ef}
 
 /* Table */
 .table{
@@ -191,6 +192,45 @@ body{
   width:100%; background:#0e1730; border:1px solid #24325b; color:var(--text);
   padding:8px 10px; border-radius:10px; outline:none;
 }
+
+/* Toast */
+.toast{
+  position:fixed;
+  bottom:24px;
+  right:24px;
+  max-width:320px;
+  opacity:0;
+  transform:translateY(12px);
+  transition:opacity .3s ease, transform .3s ease;
+  pointer-events:none;
+  z-index:40;
+}
+
+.toast.visible{opacity:1; transform:translateY(0);}
+
+.toast-card{
+  background:var(--card);
+  border:1px solid var(--line);
+  border-radius:16px;
+  padding:16px;
+  box-shadow:var(--shadow);
+  display:flex;
+  flex-direction:column;
+  gap:8px;
+}
+
+.toast-card strong{font-size:15px;}
+
+.toast-card dl{margin:0; display:grid; gap:6px;}
+
+.toast-card dt{
+  font-size:11px;
+  color:var(--muted);
+  letter-spacing:.04em;
+  text-transform:uppercase;
+}
+
+.toast-card dd{margin:0; font-weight:600;}
 
 /* Hide views by default */
 .view{display:none}
