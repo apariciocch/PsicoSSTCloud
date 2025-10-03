@@ -30,6 +30,45 @@
     font: 15px/1.55 system-ui, -apple-system, Segoe UI, Roboto, Inter, "Helvetica Neue", Arial, "Noto Sans", "Apple Color Emoji","Segoe UI Emoji";
   }
 
+  /* Login */
+  .login-screen{
+    position:fixed;
+    inset:0;
+    display:grid;
+    place-items:center;
+    background:radial-gradient(circle at top, rgba(43,69,125,.85), rgba(10,17,32,.95));
+    padding:20px;
+    z-index:30;
+  }
+  .login-card{
+    width:min(420px, 92vw);
+    background:var(--card);
+    border:1px solid var(--line);
+    border-radius:var(--radius);
+    box-shadow:var(--shadow);
+    padding:26px 28px 24px;
+    display:flex;
+    flex-direction:column;
+    gap:18px;
+  }
+  .login-card header{display:flex; gap:12px; align-items:center;}
+  .login-card .logo{width:46px; height:46px; border-radius:16px;}
+  .login-card h2{margin:0; font-size:20px;}
+  .login-card p{margin:0; color:var(--muted);}
+  .login-card label{display:block; font-size:13px; color:var(--muted); margin-bottom:6px;}
+  .login-card input{
+    width:100%;
+    background:#0e1730;
+    border:1px solid #24325b;
+    color:var(--text);
+    padding:10px 12px;
+    border-radius:12px;
+    outline:none;
+  }
+  .login-card input:focus{border-color:var(--primary); box-shadow:0 0 0 2px rgba(91,156,255,.2);}
+  .login-actions{display:flex; justify-content:flex-end;}
+  .login-error{color:var(--danger); font-size:13px; min-height:18px;}
+
   /* Layout */
   .app{
     display:grid;
@@ -174,7 +213,32 @@
 </style>
 </head>
 <body>
-<div class="app">
+<div class="login-screen" id="login-screen" role="dialog" aria-modal="true" aria-labelledby="login-title">
+  <div class="login-card">
+    <header>
+      <div class="logo" aria-hidden="true"></div>
+      <div>
+        <h2 id="login-title">PsicoSST Cloud</h2>
+        <p>Inicia sesión con tus credenciales</p>
+      </div>
+    </header>
+    <form id="login-form">
+      <div>
+        <label for="login-username">Usuario</label>
+        <input id="login-username" name="username" autocomplete="username" placeholder="Ej. Armando" required />
+      </div>
+      <div>
+        <label for="login-password">Contraseña</label>
+        <input id="login-password" name="password" type="password" autocomplete="current-password" placeholder="Ingresa tu contraseña" required />
+      </div>
+      <div class="login-error" id="login-error" role="alert" aria-live="polite"></div>
+      <div class="login-actions">
+        <button class="btn primary" type="submit">Ingresar</button>
+      </div>
+    </form>
+  </div>
+</div>
+<div class="app" id="app" style="display:none">
   <!-- SIDEBAR -->
   <aside class="sidebar">
     <div class="brand">
@@ -216,6 +280,7 @@
     <div class="actions">
       <button class="btn" id="btnNew">+ Nueva evaluación</button>
       <button class="btn primary" id="btnZip">⬇️ Carpeta SUNAFIL</button>
+      <button class="btn" id="btnLogout">Cerrar sesión</button>
     </div>
   </header>
 
@@ -397,11 +462,12 @@
             <option>Auditor (solo lectura)</option>
           </select>
         </div>
-        <table class="table">
+        <table class="table" id="users-table">
           <thead><tr><th>Nombre</th><th>Correo</th><th>Rol</th><th>Estado</th><th></th></tr></thead>
-          <tbody>
-            <tr><td>Armando Aparicio</td><td>armando@empresa.pe</td><td>Psicólogo</td><td><span class="pill ok">Activo</span></td><td><button class="btn">Editar</button></td></tr>
-            <tr><td>María Torres</td><td>maria@empresa.pe</td><td>Comité SST</td><td><span class="pill">Invitado</span></td><td><button class="btn">Reenviar</button></td></tr>
+          <tbody id="user-table-body">
+            <tr>
+              <td colspan="5" class="muted" style="text-align:center">Cargando usuarios…</td>
+            </tr>
           </tbody>
         </table>
       </div>
@@ -438,6 +504,48 @@
 </div>
 
 <!-- MODALES -->
+<div class="modal-bg" id="user-modal-bg">
+  <div class="modal" role="dialog" aria-modal="true" aria-labelledby="user-modal-title">
+    <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:8px">
+      <h3 id="user-modal-title">Nuevo usuario</h3>
+      <button class="btn" type="button" id="user-modal-close">✖</button>
+    </div>
+    <form id="user-form">
+      <div class="row" style="grid-template-columns:1fr 1fr">
+        <div style="grid-column:1 / -1">
+          <label for="user-name">Nombre completo</label>
+          <input id="user-name" name="name" placeholder="Ej. Armando Aparicio" required />
+        </div>
+        <div style="grid-column:1 / -1">
+          <label for="user-email">Correo</label>
+          <input id="user-email" name="email" type="email" placeholder="correo@empresa.pe" required />
+        </div>
+        <div>
+          <label for="user-role">Rol</label>
+          <select id="user-role" name="role" required>
+            <option value="Psicólogo">Psicólogo</option>
+            <option value="Empresa">Empresa</option>
+            <option value="Comité SST">Comité SST</option>
+            <option value="Auditor (solo lectura)">Auditor (solo lectura)</option>
+          </select>
+        </div>
+        <div>
+          <label for="user-status">Estado</label>
+          <select id="user-status" name="status" required>
+            <option value="Activo">Activo</option>
+            <option value="Invitado">Invitado</option>
+            <option value="Suspendido">Suspendido</option>
+          </select>
+        </div>
+      </div>
+      <div style="display:flex; justify-content:flex-end; gap:8px; margin-top:12px">
+        <button class="btn" type="button" id="user-modal-cancel">Cancelar</button>
+        <button class="btn primary" type="submit">Guardar</button>
+      </div>
+    </form>
+  </div>
+</div>
+
 <div class="modal-bg" id="modal-bg">
   <div class="modal" role="dialog" aria-modal="true" aria-labelledby="modal-title">
     <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:8px">
@@ -478,6 +586,68 @@
 </div>
 
 <script>
+  // Login sencillo (demo)
+  const loginForm = document.getElementById('login-form');
+  if (loginForm) {
+    const loginScreen = document.getElementById('login-screen');
+    const loginError = document.getElementById('login-error');
+    const app = document.getElementById('app');
+    const userField = document.getElementById('login-username');
+    const passField = document.getElementById('login-password');
+    const credentials = { username: 'Armando', password: 'admin' };
+    const logoutButton = document.getElementById('btnLogout');
+
+    const showApp = ()=>{
+      loginError.textContent = '';
+      loginScreen.style.display = 'none';
+      app.style.display = 'grid';
+      passField.value = '';
+    };
+
+    const logout = ()=>{
+      sessionStorage.removeItem('psicosst-session');
+      app.style.display = 'none';
+      loginScreen.style.display = 'grid';
+      loginForm.reset();
+      loginError.textContent = '';
+      setTimeout(()=> userField.focus(), 100);
+    };
+
+    if (logoutButton) {
+      logoutButton.addEventListener('click', logout);
+    }
+
+    if (sessionStorage.getItem('psicosst-session') !== 'active') {
+      setTimeout(()=> userField.focus(), 100);
+    }
+
+    const tryAutoLogin = ()=>{
+      const savedSession = sessionStorage.getItem('psicosst-session');
+      if (savedSession === 'active') {
+        showApp();
+        userField.value = credentials.username;
+      }
+    };
+
+    tryAutoLogin();
+
+    loginForm.addEventListener('submit', (event)=>{
+      event.preventDefault();
+      const username = userField.value.trim();
+      const password = passField.value;
+
+      if (username.toLowerCase() === credentials.username.toLowerCase() && password === credentials.password) {
+        showApp();
+        sessionStorage.setItem('psicosst-session', 'active');
+        passField.value = '';
+      } else {
+        loginError.textContent = 'Usuario o contraseña incorrectos. (Armando / admin)';
+        passField.value = '';
+        passField.focus();
+      }
+    });
+  }
+
   // Navegación entre vistas
   const menu = document.getElementById('menu');
   const views = [...document.querySelectorAll('.view')];
@@ -534,6 +704,114 @@
   q.addEventListener('keydown', (e)=>{
     if(e.key==='Enter') alert('Buscar: ' + q.value + '\n(Demo visual)');
   });
+
+  // Gestión básica de usuarios (demo funcional)
+  const userTableBody = document.getElementById('user-table-body');
+  const userModalBg = document.getElementById('user-modal-bg');
+  const userModalClose = document.getElementById('user-modal-close');
+  const userModalCancel = document.getElementById('user-modal-cancel');
+  const userModalTitle = document.getElementById('user-modal-title');
+  const userForm = document.getElementById('user-form');
+  const userNameInput = document.getElementById('user-name');
+  const userEmailInput = document.getElementById('user-email');
+  const userRoleInput = document.getElementById('user-role');
+  const userStatusInput = document.getElementById('user-status');
+  const btnNuevoUser = document.getElementById('btnNuevoUser');
+  const statusClassMap = {
+    'Activo': 'pill ok',
+    'Invitado': 'pill',
+    'Suspendido': 'pill warn'
+  };
+  const users = [
+    { name: 'Armando Aparicio', email: 'armando@empresa.pe', role: 'Psicólogo', status: 'Activo' },
+    { name: 'María Torres', email: 'maria@empresa.pe', role: 'Comité SST', status: 'Invitado' }
+  ];
+  let editingUserIndex = null;
+
+  const renderUsers = ()=>{
+    if (!userTableBody) return;
+    if (!users.length) {
+      userTableBody.innerHTML = '<tr><td colspan="5" class="muted" style="text-align:center">No hay usuarios registrados.</td></tr>';
+      return;
+    }
+    userTableBody.innerHTML = users.map((user, index)=>{
+      const pillClass = statusClassMap[user.status] || 'pill';
+      return `<tr>
+        <td>${user.name}</td>
+        <td>${user.email}</td>
+        <td>${user.role}</td>
+        <td><span class="${pillClass}">${user.status}</span></td>
+        <td><button class="btn btn-edit-user" data-index="${index}">Editar</button></td>
+      </tr>`;
+    }).join('');
+  };
+
+  const openUserModal = (index = null)=>{
+    editingUserIndex = index;
+    if (index === null) {
+      userForm.reset();
+      userStatusInput.value = 'Activo';
+      userRoleInput.value = 'Psicólogo';
+      userModalTitle.textContent = 'Nuevo usuario';
+    } else {
+      const user = users[index];
+      userNameInput.value = user.name;
+      userEmailInput.value = user.email;
+      userRoleInput.value = user.role;
+      userStatusInput.value = user.status;
+      userModalTitle.textContent = 'Editar usuario';
+    }
+    userModalBg.style.display = 'grid';
+    setTimeout(()=> userNameInput.focus(), 50);
+  };
+
+  const closeUserModal = ()=>{
+    userModalBg.style.display = 'none';
+    userForm.reset();
+    userStatusInput.value = 'Activo';
+    userRoleInput.value = 'Psicólogo';
+    editingUserIndex = null;
+  };
+
+  if (btnNuevoUser) btnNuevoUser.addEventListener('click', ()=> openUserModal());
+  if (userModalClose) userModalClose.addEventListener('click', closeUserModal);
+  if (userModalCancel) userModalCancel.addEventListener('click', closeUserModal);
+
+  if (userForm) {
+    userForm.addEventListener('submit', (event)=>{
+      event.preventDefault();
+      const newUser = {
+        name: userNameInput.value.trim(),
+        email: userEmailInput.value.trim(),
+        role: userRoleInput.value,
+        status: userStatusInput.value
+      };
+
+      if (!newUser.name || !newUser.email) {
+        return;
+      }
+
+      if (editingUserIndex === null) {
+        users.push(newUser);
+      } else {
+        users[editingUserIndex] = { ...users[editingUserIndex], ...newUser };
+      }
+      renderUsers();
+      closeUserModal();
+    });
+  }
+
+  if (userTableBody) {
+    userTableBody.addEventListener('click', (event)=>{
+      const button = event.target.closest('.btn-edit-user');
+      if (!button) return;
+      const index = Number(button.dataset.index);
+      if (Number.isNaN(index)) return;
+      openUserModal(index);
+    });
+  }
+
+  renderUsers();
 </script>
 </body>
 </html>
