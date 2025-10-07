@@ -1,0 +1,38 @@
+<div class="card">
+  <div class="tabs" id="tabs-reportes">
+    <div class="tab active" data-tab="global">Global</div>
+    <div class="tab" data-tab="individuales">Individuales</div>
+    <div class="tab" data-tab="comparativos">Comparativos</div>
+  </div>
+
+  <div id="panel-global">
+    <p class="muted">Resumen global por dimensiones (placeholder):</p>
+    <div class="grid">
+      <div class="kpi" style="grid-column: span 4"><span>Carga mental</span><b>Alto</b><span class="pill danger">Prioridad</span></div>
+      <div class="kpi" style="grid-column: span 4"><span>Liderazgo</span><b>Medio</b><span class="pill warn">Mejorar</span></div>
+      <div class="kpi" style="grid-column: span 4"><span>Clima</span><b>Bajo</b><span class="pill ok">Satisfactorio</span></div>
+    </div>
+    <div style="height:220px; margin-top:12px; border:1px dashed #24325b; border-radius:12px; display:grid; place-items:center; color:var(--muted)">
+      (Placeholder gráfico barras)
+    </div>
+  </div>
+
+  <div id="panel-individuales" style="display:none">
+    <p class="muted">Listado de informes individuales (placeholder):</p>
+    <table class="table">
+      <thead><tr><th>Código</th><th>Área</th><th>Nivel</th><th>Informe</th></tr></thead>
+      <tbody>
+        <tr><td>EMP-0001</td><td>Ventas</td><td><span class="pill warn">Medio</span></td><td><button class="btn">Descargar PDF</button></td></tr>
+        <tr><td>EMP-0002</td><td>Operaciones</td><td><span class="pill ok">Bajo</span></td><td><button class="btn">Descargar PDF</button></td></tr>
+        <tr><td>EMP-0003</td><td>At. Cliente</td><td><span class="pill danger">Alto</span></td><td><button class="btn">Descargar PDF</button></td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div id="panel-comparativos" style="display:none">
+    <p class="muted">Comparativa por periodos/áreas (placeholder):</p>
+    <div style="height:220px; border:1px dashed #24325b; border-radius:12px; display:grid; place-items:center; color:var(--muted)">
+      (Placeholder línea temporal)
+    </div>
+  </div>
+</div>

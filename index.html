@@ -1,42 +1,17 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-<meta charset="utf-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>SaaS Psicosocial – Demo UI</title>
-<link rel="stylesheet" href="css/styles.css" />
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>PsicoSST Cloud</title>
+  <link rel="stylesheet" href="styles.css" />
 </head>
 <body>
-<div class="login-screen" id="login-screen" role="dialog" aria-modal="true" aria-labelledby="login-title">
-  <div class="login-card">
-    <header>
-      <div class="logo" aria-hidden="true"></div>
-      <div>
-        <h2 id="login-title">PsicoSST Cloud</h2>
-        <p>Inicia sesión con tus credenciales</p>
-      </div>
-    </header>
-    <form id="login-form">
-      <div>
-        <label for="login-username">Usuario</label>
-        <input id="login-username" name="username" autocomplete="username" placeholder="Ej. Armando" required />
-      </div>
-      <div>
-        <label for="login-password">Contraseña</label>
-        <input id="login-password" name="password" type="password" autocomplete="current-password" placeholder="Ingresa tu contraseña" required />
-      </div>
-      <div class="login-error" id="login-error" role="alert" aria-live="polite"></div>
-      <div class="login-actions">
-        <button class="btn primary" type="submit">Ingresar</button>
-      </div>
-    </form>
-  </div>
-</div>
-<div class="app" id="app" style="display:none">
+<div class="app">
   <!-- SIDEBAR -->
   <aside class="sidebar">
     <div class="brand">
-      <div class="logo" aria-hidden="true"></div>
+      <img src="assets/logo.svg" alt="logo" class="logo" />
       <div>
         <h1>PsicoSST Cloud</h1>
         <div class="muted">Gestión Psicosocial</div>
@@ -48,19 +23,19 @@
     </div>
 
     <nav class="menu" id="menu">
-      <div class="item active" data-view="dashboard" data-label="Dashboard">📊 Dashboard</div>
-      <div class="item" data-view="evaluaciones" data-label="Evaluaciones">📝 Evaluaciones</div>
-      <div class="item" data-view="reportes" data-label="Reportes">📄 Reportes</div>
-      <div class="item" data-view="carpeta" data-label="Carpeta Legal">🗂 Carpeta Legal</div>
-      <div class="item" data-view="plan" data-label="Plan de Acción">✅ Plan de Acción <span class="tag">4 pendientes</span></div>
-      <div class="item" data-view="capacitaciones" data-label="Capacitaciones">🎓 Capacitaciones</div>
-      <div class="item" data-view="casos" data-label="Casos">🔒 Casos</div>
-      <div class="item" data-view="usuarios" data-label="Usuarios">👥 Usuarios</div>
-      <div class="item" data-view="config" data-label="Configuración">⚙️ Configuración</div>
+      <a class="item active" href="#/dashboard" data-view="dashboard">📊 Dashboard</a>
+      <a class="item" href="#/evaluaciones" data-view="evaluaciones">📝 Evaluaciones</a>
+      <a class="item" href="#/reportes" data-view="reportes">📄 Reportes</a>
+      <a class="item" href="#/carpeta" data-view="carpeta">🗂 Carpeta Legal</a>
+      <a class="item" href="#/plan" data-view="plan">✅ Plan de Acción <span class="tag">4 pendientes</span></a>
+      <a class="item" href="#/capacitaciones" data-view="capacitaciones">🎓 Capacitaciones</a>
+      <a class="item" href="#/casos" data-view="casos">🔒 Casos</a>
+      <a class="item" href="#/usuarios" data-view="usuarios">👥 Usuarios</a>
+      <a class="item" href="#/config" data-view="config">⚙️ Configuración</a>
     </nav>
 
-    <div style="margin-top:16px; border-top:1px solid var(--line); padding-top:12px">
-      <div class="muted" style="font-size:12px">© 2025 Dinámica Operativa</div>
+    <div class="footer-note">
+      <div class="muted small">© 2025 AlbatrossCloud SAC</div>
     </div>
   </aside>
 
@@ -69,327 +44,60 @@
     <div class="crumbs">
       <span id="crumb">Dashboard</span>
       <span class="muted">/</span>
-      <span class="muted">Demo visual</span>
+      <span class="muted">Demo modular</span>
     </div>
     <div class="actions">
       <button class="btn" id="btnNew">+ Nueva evaluación</button>
       <button class="btn primary" id="btnZip">⬇️ Carpeta SUNAFIL</button>
-      <button class="btn" id="btnLogout">Cerrar sesión</button>
     </div>
   </header>
 
-  <!-- MAIN -->
+  <!-- MAIN (contenedor donde se inyectan vistas) -->
   <main class="main">
-    <!-- DASHBOARD -->
-    <section class="view active" id="view-dashboard" aria-label="Dashboard">
-      <div class="grid" style="grid-template-columns: repeat(12, 1fr)">
-        <div class="card" style="grid-column: span 4">
-          <h3>Participación</h3>
-          <div class="kpi"><span>Encuestas respondidas</span><b>128</b><span class="pill ok">82% tasa</span></div>
-        </div>
-        <div class="card" style="grid-column: span 4">
-          <h3>Riesgo global</h3>
-          <div class="kpi"><span>Nivel</span><b>Medio</b><span class="pill warn">Atender</span></div>
-        </div>
-        <div class="card" style="grid-column: span 4">
-          <h3>Casos abiertos</h3>
-          <div class="kpi"><span>Confidenciales</span><b>5</b><span class="pill danger">3 urgentes</span></div>
-        </div>
-
-        <div class="card" style="grid-column: span 8">
-          <h3>Mapa de calor por áreas</h3>
-          <div style="height:220px; border:1px dashed #24325b; border-radius:12px; display:grid; place-items:center; color:var(--muted)">
-            (Placeholder de gráfico)
-          </div>
-        </div>
-        <div class="card" style="grid-column: span 4">
-          <h3>Alertas</h3>
-          <ul style="margin:0; padding-left:16px">
-            <li>Capacitación “Manejo del Estrés” vence en 10 días</li>
-            <li>Reevaluación Área Ventas – 30/10/2025</li>
-            <li>3 acciones correctivas retrasadas</li>
-          </ul>
-        </div>
-      </div>
-    </section>
-
-    <!-- EVALUACIONES -->
-    <section class="view" id="view-evaluaciones" aria-label="Evaluaciones">
-      <div class="card">
-        <div class="toolbar">
-          <button class="btn primary" id="btnNuevaEval">+ Crear evaluación</button>
-          <div class="muted" style="display:flex; align-items:center; gap:8px">
-            <span style="font-weight:600">Instrumento:</span>
-            <span>MINSA 2024</span>
-          </div>
-          <span class="badge" id="evaluaciones-count">0 activas</span>
-        </div>
-        <p class="muted" style="margin-top:-4px">Gestiona aquí todas las aplicaciones del instrumento MINSA 2024 en tu organización.</p>
-        <table class="table" aria-describedby="evaluaciones-count">
-          <thead><tr><th>Evaluación</th><th>Área</th><th>Periodo</th><th>Estado</th><th>Acciones</th></tr></thead>
-          <tbody id="evaluaciones-body"></tbody>
-        </table>
-      </div>
-    </section>
-
-    <!-- REPORTES -->
-    <section class="view" id="view-reportes" aria-label="Reportes">
-      <div class="card">
-        <div class="tabs" id="tabs-reportes">
-          <div class="tab active" data-tab="global">Global</div>
-          <div class="tab" data-tab="individuales">Individuales</div>
-          <div class="tab" data-tab="comparativos">Comparativos</div>
-        </div>
-        <div id="panel-global">
-          <p class="muted">Resumen global por dimensiones (placeholder):</p>
-          <div class="grid" style="grid-template-columns: repeat(12, 1fr)">
-            <div class="kpi" style="grid-column: span 4"><span>Carga mental</span><b>Alto</b><span class="pill danger">Prioridad</span></div>
-            <div class="kpi" style="grid-column: span 4"><span>Liderazgo</span><b>Medio</b><span class="pill warn">Mejorar</span></div>
-            <div class="kpi" style="grid-column: span 4"><span>Clima</span><b>Bajo</b><span class="pill ok">Satisfactorio</span></div>
-          </div>
-          <div style="height:220px; margin-top:12px; border:1px dashed #24325b; border-radius:12px; display:grid; place-items:center; color:var(--muted)">(Placeholder gráfico barras)</div>
-        </div>
-        <div id="panel-individuales" style="display:none">
-          <p class="muted">Listado de informes individuales (placeholder):</p>
-          <table class="table">
-            <thead><tr><th>Código</th><th>Área</th><th>Nivel</th><th>Informe</th></tr></thead>
-            <tbody>
-              <tr><td>EMP-0001</td><td>Ventas</td><td><span class="pill warn">Medio</span></td><td><button class="btn">Descargar PDF</button></td></tr>
-              <tr><td>EMP-0002</td><td>Operaciones</td><td><span class="pill ok">Bajo</span></td><td><button class="btn">Descargar PDF</button></td></tr>
-              <tr><td>EMP-0003</td><td>At. Cliente</td><td><span class="pill danger">Alto</span></td><td><button class="btn">Descargar PDF</button></td></tr>
-            </tbody>
-          </table>
-        </div>
-        <div id="panel-comparativos" style="display:none">
-          <p class="muted">Comparativa por periodos/áreas (placeholder):</p>
-          <div style="height:220px; border:1px dashed #24325b; border-radius:12px; display:grid; place-items:center; color:var(--muted)">(Placeholder línea temporal)</div>
-        </div>
-      </div>
-    </section>
-
-    <!-- CARPETA LEGAL -->
-    <section class="view" id="view-carpeta" aria-label="Carpeta Legal">
-      <div class="card">
-        <h3>Carpeta Legal Psicosocial (SUNAFIL)</h3>
-        <p class="muted">Estructura sugerida. El botón superior “⬇️ Carpeta SUNAFIL” simula la descarga del ZIP.</p>
-        <ul>
-          <li>01_Informe_Consolidado.pdf</li>
-          <li>02_Informes_Individuales/</li>
-          <li>03_Plan_de_Accion.xlsx</li>
-          <li>04_Actas_Comite_SST/</li>
-          <li>05_Capacitaciones/</li>
-          <li>06_Evidencias/</li>
-          <li>07_Politicas_y_Reglamento_SST/</li>
-        </ul>
-      </div>
-    </section>
-
-    <!-- PLAN DE ACCIÓN -->
-    <section class="view" id="view-plan" aria-label="Plan de Acción">
-      <div class="card">
-        <div class="toolbar">
-          <button class="btn primary" id="btnNuevaAccion">+ Nueva acción</button>
-          <select><option>Todas las áreas</option><option>Ventas</option><option>Operaciones</option></select>
-          <select><option>Todas</option><option>Pendiente</option><option>En curso</option><option>Completada</option></select>
-        </div>
-        <table class="table">
-          <thead><tr><th>Riesgo</th><th>Acción</th><th>Responsable</th><th>Vence</th><th>Estado</th></tr></thead>
-          <tbody>
-            <tr><td>Carga mental alta</td><td>Redistribuir turnos y establecer pausas</td><td>Jefe Operaciones</td><td>20/10/2025</td><td><span class="pill warn">En curso</span></td></tr>
-            <tr><td>Liderazgo deficiente</td><td>Taller de feedback efectivo</td><td>RRHH</td><td>05/11/2025</td><td><span class="pill">Pendiente</span></td></tr>
-            <tr><td>Acoso reportado</td><td>Protocolo y mediación</td><td>Comité SST</td><td>Inmediato</td><td><span class="pill danger">Urgente</span></td></tr>
-          </tbody>
-        </table>
-      </div>
-    </section>
-
-    <!-- CAPACITACIONES -->
-    <section class="view" id="view-capacitaciones" aria-label="Capacitaciones">
-      <div class="card">
-        <div class="toolbar">
-          <button class="btn" id="btnNuevaCap">+ Nueva capacitación</button>
-          <input class="input" placeholder="Buscar curso…" />
-          <span class="badge">Próximas: 2</span>
-        </div>
-        <table class="table">
-          <thead><tr><th>Curso</th><th>Fecha</th><th>Área</th><th>Inscritos</th><th>Acciones</th></tr></thead>
-          <tbody>
-            <tr><td>Manejo del Estrés</td><td>25/10/2025</td><td>Operaciones</td><td>22</td><td><button class="btn">Lista</button></td></tr>
-            <tr><td>Prevención de Acoso</td><td>08/11/2025</td><td>General</td><td>45</td><td><button class="btn">Lista</button></td></tr>
-          </tbody>
-        </table>
-      </div>
-    </section>
-
-    <!-- CASOS -->
-    <section class="view" id="view-casos" aria-label="Casos">
-      <div class="card">
-        <div class="toolbar">
-          <span class="badge danger">5 abiertos</span>
-          <span class="badge ok">10 cerrados</span>
-        </div>
-        <table class="table">
-          <thead><tr><th>Código</th><th>Tipo</th><th>Estado</th><th>Última actualización</th><th></th></tr></thead>
-          <tbody>
-            <tr><td>CASE-0012</td><td>Acoso</td><td><span class="pill danger">Alta prioridad</span></td><td>02/10/2025</td><td><button class="btn">Ver</button></td></tr>
-            <tr><td>CASE-0013</td><td>Conflicto</td><td><span class="pill warn">En análisis</span></td><td>03/10/2025</td><td><button class="btn">Ver</button></td></tr>
-          </tbody>
-        </table>
-      </div>
-    </section>
-
-    <!-- USUARIOS -->
-    <section class="view" id="view-usuarios" aria-label="Usuarios">
-      <div class="card">
-        <div class="toolbar">
-          <button class="btn" id="btnNuevoUser">+ Nuevo usuario</button>
-          <select>
-            <option>Todos los roles</option>
-            <option>Psicólogo</option>
-            <option>Empresa</option>
-            <option>Comité SST</option>
-            <option>Auditor (solo lectura)</option>
-          </select>
-        </div>
-        <table class="table" id="users-table">
-          <thead><tr><th>Nombre</th><th>Correo</th><th>Rol</th><th>Estado</th><th></th></tr></thead>
-          <tbody id="user-table-body">
-            <tr>
-              <td colspan="5" class="muted" style="text-align:center">Cargando usuarios…</td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
-    </section>
-
-    <!-- CONFIGURACIÓN -->
-    <section class="view" id="view-config" aria-label="Configuración">
-      <div class="card">
-        <h3>Parámetros generales</h3>
-        <div class="grid" style="grid-template-columns: repeat(12, 1fr)">
-          <div style="grid-column: span 6">
-            <label>Nombre de la empresa</label>
-            <input class="input" placeholder="Ej. Dinámica Operativa SAC" />
-          </div>
-          <div style="grid-column: span 6">
-            <label>RUC</label>
-            <input class="input" placeholder="20XXXXXXXXX" />
-          </div>
-          <div style="grid-column: span 6">
-            <label>Instrumento por defecto</label>
-            <select><option>MINSA 2024</option><option>COPSOQ</option></select>
-          </div>
-          <div style="grid-column: span 6">
-            <label>Firma del psicólogo (texto)</label>
-            <input class="input" placeholder="Lic. Aparicio Armando Capcha Chávez – C.Ps.P XXXXX – Habilitado" />
-          </div>
-        </div>
-        <div style="margin-top:12px">
-          <button class="btn primary">Guardar</button>
-        </div>
-      </div>
-    </section>
+    <div id="view-container" class="view-container" aria-live="polite"></div>
   </main>
 </div>
 
-<!-- MODALES -->
-<div class="modal-bg" id="user-modal-bg">
-  <div class="modal" role="dialog" aria-modal="true" aria-labelledby="user-modal-title">
-    <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:8px">
-      <h3 id="user-modal-title">Nuevo usuario</h3>
-      <button class="btn" type="button" id="user-modal-close">✖</button>
-    </div>
-    <form id="user-form">
-      <div class="row" style="grid-template-columns:1fr 1fr">
-        <div style="grid-column:1 / -1">
-          <label for="user-name">Nombre completo</label>
-          <input id="user-name" name="name" placeholder="Ej. Armando Aparicio" required />
-        </div>
-        <div style="grid-column:1 / -1">
-          <label for="user-email">Correo</label>
-          <input id="user-email" name="email" type="email" placeholder="correo@empresa.pe" required />
-        </div>
-        <div>
-          <label for="user-role">Rol</label>
-          <select id="user-role" name="role" required>
-            <option value="Psicólogo">Psicólogo</option>
-            <option value="Empresa">Empresa</option>
-            <option value="Comité SST">Comité SST</option>
-            <option value="Auditor (solo lectura)">Auditor (solo lectura)</option>
-          </select>
-        </div>
-        <div>
-          <label for="user-status">Estado</label>
-          <select id="user-status" name="status" required>
-            <option value="Activo">Activo</option>
-            <option value="Invitado">Invitado</option>
-            <option value="Suspendido">Suspendido</option>
-          </select>
-        </div>
-      </div>
-      <div style="display:flex; justify-content:flex-end; gap:8px; margin-top:12px">
-        <button class="btn" type="button" id="user-modal-cancel">Cancelar</button>
-        <button class="btn primary" type="submit">Guardar</button>
-      </div>
-    </form>
-  </div>
-</div>
-
-<div class="modal-bg" id="modal-bg">
+<!-- MODAL GENÉRICO -->
+<div class="modal-bg" id="modal-bg" aria-hidden="true">
   <div class="modal" role="dialog" aria-modal="true" aria-labelledby="modal-title">
-    <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:8px">
+    <div class="modal-head">
       <h3 id="modal-title">Nueva evaluación</h3>
-      <button class="btn" type="button" id="modal-close">✖</button>
+      <button class="btn" id="modal-close" aria-label="Cerrar">✖</button>
     </div>
-    <form id="evaluation-form">
-      <div class="row">
-        <div style="grid-column:1 / -1">
-          <label for="evaluation-instrument">Instrumento</label>
-          <input id="evaluation-instrument" name="instrument" value="MINSA 2024" readonly />
-          <div class="muted" style="font-size:12px">El formulario aplica exclusivamente el cuestionario oficial MINSA 2024.</div>
-        </div>
-        <div>
-          <label for="evaluation-area">Área</label>
-          <input id="evaluation-area" name="area" placeholder="Ej. Atención al Cliente" required />
-        </div>
-        <div>
-          <label for="evaluation-period">Periodo</label>
-          <input id="evaluation-period" name="period" type="month" required />
-        </div>
-        <div>
-          <label for="evaluation-mode">Modo</label>
-          <select id="evaluation-mode" name="mode">
-            <option value="Anónimo">Anónimo</option>
-            <option value="Identificado">Identificado</option>
-          </select>
-        </div>
-        <div style="grid-column:1/-1">
-          <label for="evaluation-notes">Notas</label>
-          <textarea id="evaluation-notes" name="notes" rows="4" placeholder="Instrucciones para participantes…"></textarea>
-        </div>
+    <div class="row">
+      <div>
+        <label>Instrumento</label>
+        <select>
+          <option>MINSA 2024</option>
+          <option>COPSOQ</option>
+          <option>ISTAS21 (ref.)</option>
+        </select>
       </div>
-      <div style="display:flex; justify-content:flex-end; gap:8px; margin-top:12px">
-        <button class="btn" type="button" id="modal-cancel">Cancelar</button>
-        <button class="btn primary" type="submit">Crear</button>
+      <div>
+        <label>Área</label>
+        <input placeholder="Ej. Atención al Cliente" />
       </div>
-    </form>
+      <div>
+        <label>Periodo</label>
+        <input type="month" />
+      </div>
+      <div>
+        <label>Modo</label>
+        <select><option>Anónimo</option><option>Identificado</option></select>
+      </div>
+      <div class="full">
+        <label>Notas</label>
+        <textarea rows="4" placeholder="Instrucciones para participantes…"></textarea>
+      </div>
+    </div>
+    <div class="modal-actions">
+      <button class="btn" id="modal-cancel">Cancelar</button>
+      <button class="btn primary">Crear</button>
+    </div>
   </div>
 </div>
 
-<template id="evaluation-summary-template">
-  <div class="toast-card" role="status">
-    <strong>Evaluación MINSA 2024 creada</strong>
-    <dl>
-      <div><dt>Área</dt><dd data-summary="area"></dd></div>
-      <div><dt>Periodo</dt><dd data-summary="periodo"></dd></div>
-      <div><dt>Modo</dt><dd data-summary="modo"></dd></div>
-      <div><dt>Notas</dt><dd data-summary="notas"></dd></div>
-    </dl>
-  </div>
-</template>
-
-<div class="toast" id="evaluation-toast" aria-live="assertive"></div>
-
-<script type="module" src="js/app.js"></script>
+<script src="main.js"></script>
 </body>
 </html>
