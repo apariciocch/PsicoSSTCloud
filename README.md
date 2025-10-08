@@ -8,7 +8,7 @@
    ```
 2. Copia el archivo de variables de entorno de ejemplo y actualiza los datos si fuera necesario:
    ```bash
-   cp server/.env.example server/.env
+   cp .env.example .env
    ```
 3. Inicia el servidor de desarrollo:
    ```bash
@@ -17,7 +17,8 @@
 
 ## Variables de entorno
 
-La API usa `pg` para conectarse a la base de datos. Define la variable `DATABASE_URL` en `server/.env` con el string de conexión que entrega tu proveedor. Por ejemplo:
+La API usa `pg` para conectarse a la base de datos. Define la variable `DATABASE_URL` en el archivo `.env` de la raíz con la cadena de conexión
+que entrega tu proveedor. Por ejemplo:
 
 ```env
 DATABASE_URL="postgresql://neondb_owner:npg_qrXE48eofWVC@ep-divine-shadow-adp4gjr5-pooler.c-2.us-east-1.aws.neon.tech/neondb?sslmode=require&channel_binding=require"
