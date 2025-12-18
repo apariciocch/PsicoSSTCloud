@@ -1,0 +1,24 @@
+<div class="card">
+  <h3>Resultados por evaluado</h3>
+  <div class="grid" style="grid-template-columns: repeat(12, 1fr); margin-bottom:10px">
+    <div style="grid-column: span 6">
+      <label>Selecciona respuesta guardada</label>
+      <select id="res-select"></select>
+    </div>
+    <div style="grid-column: span 6; display:flex; align-items:flex-end; justify-content:flex-end; gap:8px">
+      <button class="btn" id="btnVerResultado">Ver resultado</button>
+    </div>
+  </div>
+  <div id="resultado-panel">
+    <div class="grid" style="grid-template-columns: repeat(12, 1fr); gap:12px">
+      <div class="card" style="grid-column: span 12">
+        <h3>Resumen general</h3>
+        <div id="res-total" class="kpi"><span>Puntaje total</span><b>—</b><span class="pill">—</span></div>
+      </div>
+      <div class="card" style="grid-column: span 12">
+        <h3>Dimensiones</h3>
+        <div id="res-dimensiones" class="grid" style="grid-template-columns: repeat(12, 1fr); gap:8px"></div>
+      </div>
+    </div>
+  </div>
+</div>

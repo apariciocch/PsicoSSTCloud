@@ -1,0 +1,20 @@
+<div style="display:grid; place-items:center; min-height:60vh">
+  <div class="card" style="width:min(420px, 92vw)">
+    <h3>Iniciar sesión</h3>
+    <p class="muted">Ingresa credenciales para continuar. Demo: admin / admin</p>
+    <form id="login-form" style="display:grid; gap:10px">
+      <div>
+        <label>Usuario</label>
+        <input id="login-user" class="input" placeholder="admin" autocomplete="username" />
+      </div>
+      <div>
+        <label>Contraseña</label>
+        <input id="login-pass" type="password" class="input" placeholder="admin" autocomplete="current-password" />
+      </div>
+      <div id="login-error" class="pill danger" style="display:none">Usuario o contraseña incorrectos</div>
+      <div style="display:flex; justify-content:flex-end; gap:8px">
+        <button type="submit" class="btn primary" id="login-submit">Acceder</button>
+      </div>
+    </form>
+  </div>
+</div>

@@ -1,0 +1,62 @@
+<div class="card">
+  <div class="toolbar">
+    <button class="btn" id="btnNuevoUser">+ Nuevo usuario</button>
+    <select>
+      <option>Todos los roles</option>
+      <option>Psicólogo</option>
+      <option>Empresa</option>
+      <option>Comité SST</option>
+      <option>Auditor (solo lectura)</option>
+    </select>
+  </div>
+  <div class="grid" style="grid-template-columns: repeat(12, 1fr); margin-bottom:10px">
+    <div style="grid-column: span 3">
+      <label>Nombre</label>
+      <input id="user-nombre" class="input" placeholder="Ej. Juan Pérez" />
+    </div>
+    <div style="grid-column: span 2">
+      <label>DNI</label>
+      <input id="user-dni" class="input" placeholder="12345678" maxlength="8" />
+    </div>
+    <div style="grid-column: span 3">
+      <label>Correo</label>
+      <input id="user-correo" class="input" placeholder="correo@empresa.pe" />
+    </div>
+    <div style="grid-column: span 2">
+      <label>Género</label>
+      <select id="user-genero">
+        <option value=""></option>
+        <option>Masculino</option>
+        <option>Femenino</option>
+      </select>
+    </div>
+    <div style="grid-column: span 2">
+      <label>Puesto</label>
+      <input id="user-puesto" class="input" placeholder="Ej. Analista" />
+    </div>
+    <div style="grid-column: span 4">
+      <label>Rol</label>
+      <select id="user-rol">
+        <option>Psicólogo</option>
+        <option>Empresa</option>
+        <option>Comité SST</option>
+        <option>Auditor (solo lectura)</option>
+      </select>
+    </div>
+    <div style="grid-column: span 2">
+      <label>Estado</label>
+      <select id="user-estado">
+        <option>Activo</option>
+        <option>Invitado</option>
+      </select>
+    </div>
+    <div style="grid-column: 1 / -1; display:flex; gap:8px; justify-content:flex-end">
+      <button class="btn primary" id="btnGuardarUser">Guardar usuario</button>
+      <span id="user-msg" class="pill" style="display:none">Guardado</span>
+    </div>
+  </div>
+  <table class="table">
+    <thead><tr><th>Nombre</th><th>DNI</th><th>Correo</th><th>Género</th><th>Puesto</th><th>Rol</th><th>Estado</th><th></th></tr></thead>
+    <tbody id="users-list"></tbody>
+  </table>
+</div>

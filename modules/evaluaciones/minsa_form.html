@@ -1,0 +1,415 @@
+<div class="card">
+  <h3>Cuestionario de Identificación y Evaluación de Riesgos Psicosociales en los Lugares de Trabajo</h3>
+  <p class="muted">Formulario anónimo. Responde según corresponda.</p>
+  <div class="grid" style="grid-template-columns: repeat(12, 1fr); margin-bottom:10px">
+    <div style="grid-column: span 2">
+      <label>Edad</label>
+      <input id="f-edad" class="input" type="number" min="0" />
+    </div>
+    <div style="grid-column: span 3">
+      <label>Género</label>
+      <select id="f-genero"><option></option><option>Masculino</option><option>Femenino</option></select>
+    </div>
+    <div style="grid-column: span 4">
+      <label>Puesto de trabajo u ocupación</label>
+      <input id="f-puesto" class="input" />
+    </div>
+    <div style="grid-column: span 3">
+      <label>Fecha</label>
+      <input id="f-fecha" class="input" type="date" />
+    </div>
+  </div>
+  <div style="display:flex; gap:8px; justify-content:flex-end; margin-bottom:10px">
+    <button class="btn" id="btnMinsaVolver">Volver</button>
+    <button class="btn" id="btnMinsaGuardar">Guardar respuestas</button>
+    <button class="btn primary" id="btnMinsaExport">Exportar Excel</button>
+  </div>
+
+  <div id="minsa-form">
+    <style>.q{margin:10px 0; padding:10px; border:1px solid #24325b; border-radius:12px; background:#0e1730}</style>
+
+    <h4>Carga de trabajo</h4>
+    <div class="q" data-q="1">1. Considero que son aceptables las solicitudes y requerimientos que me piden otras personas (compañeros de trabajo, usuarios, clientes).
+      <div>
+        <label><input type="radio" name="q1" value="4"> Completamente de acuerdo (4)</label>
+        <label><input type="radio" name="q1" value="3"> Parcialmente de acuerdo (3)</label>
+        <label><input type="radio" name="q1" value="2"> Poco de acuerdo (2)</label>
+        <label><input type="radio" name="q1" value="1"> En desacuerdo (1)</label>
+      </div>
+    </div>
+    <div class="q" data-q="2">2. Tengo suficiente tiempo para realizar todas las actividades que me han sido encomendadas dentro de mi jornada laboral.
+      <div>
+        <label><input type="radio" name="q2" value="4"> Completamente de acuerdo (4)</label>
+        <label><input type="radio" name="q2" value="3"> Parcialmente de acuerdo (3)</label>
+        <label><input type="radio" name="q2" value="2"> Poco de acuerdo (2)</label>
+        <label><input type="radio" name="q2" value="1"> En desacuerdo (1)</label>
+      </div>
+    </div>
+
+    <h4>Desarrollo de competencias</h4>
+    <div class="q" data-q="3">3. Considero que tengo los suficientes conocimientos, habilidades y destrezas para desarrollar el trabajo para el cual fui contratado.
+      <div>
+        <label><input type="radio" name="q3" value="4"> Completamente de acuerdo (4)</label>
+        <label><input type="radio" name="q3" value="3"> Parcialmente de acuerdo (3)</label>
+        <label><input type="radio" name="q3" value="2"> Poco de acuerdo (2)</label>
+        <label><input type="radio" name="q3" value="1"> En desacuerdo (1)</label>
+      </div>
+    </div>
+    <div class="q" data-q="4">4. En mi trabajo aprendo y adquiero nuevos conocimientos, habilidades y destrezas de mis compañeros de trabajo.
+      <div>
+        <label><input type="radio" name="q4" value="4"> Completamente de acuerdo (4)</label>
+        <label><input type="radio" name="q4" value="3"> Parcialmente de acuerdo (3)</label>
+        <label><input type="radio" name="q4" value="2"> Poco de acuerdo (2)</label>
+        <label><input type="radio" name="q4" value="1"> En desacuerdo (1)</label>
+      </div>
+    </div>
+
+    <h4>Liderazgo</h4>
+    <div class="q" data-q="5">5. Mi jefe inmediato está dispuesto a escuchar propuestas de cambio e iniciativas de trabajo.
+      <div>
+        <label><input type="radio" name="q5" value="4"> Completamente de acuerdo (4)</label>
+        <label><input type="radio" name="q5" value="3"> Parcialmente de acuerdo (3)</label>
+        <label><input type="radio" name="q5" value="2"> Poco de acuerdo (2)</label>
+        <label><input type="radio" name="q5" value="1"> En desacuerdo (1)</label>
+      </div>
+    </div>
+    <div class="q" data-q="6">6. Mi jefe inmediato establece metas, plazos claros y factibles para el cumplimiento de mis funciones o actividades.
+      <div>
+        <label><input type="radio" name="q6" value="4"> Completamente de acuerdo (4)</label>
+        <label><input type="radio" name="q6" value="3"> Parcialmente de acuerdo (3)</label>
+        <label><input type="radio" name="q6" value="2"> Poco de acuerdo (2)</label>
+        <label><input type="radio" name="q6" value="1"> En desacuerdo (1)</label>
+      </div>
+    </div>
+    <div class="q" data-q="7">7. Mi jefe inmediato brinda apoyo y soporte cuando tengo dudas y/o consultas acerca de una tarea asignada.
+      <div>
+        <label><input type="radio" name="q7" value="4"> Completamente de acuerdo (4)</label>
+        <label><input type="radio" name="q7" value="3"> Parcialmente de acuerdo (3)</label>
+        <label><input type="radio" name="q7" value="2"> Poco de acuerdo (2)</label>
+        <label><input type="radio" name="q7" value="1"> En desacuerdo (1)</label>
+      </div>
+    </div>
+    <div class="q" data-q="8">8. Mi jefe inmediato pone en consideración del equipo de trabajo las decisiones que pueden afectar a todos.
+      <div>
+        <label><input type="radio" name="q8" value="4"> Completamente de acuerdo (4)</label>
+        <label><input type="radio" name="q8" value="3"> Parcialmente de acuerdo (3)</label>
+        <label><input type="radio" name="q8" value="2"> Poco de acuerdo (2)</label>
+        <label><input type="radio" name="q8" value="1"> En desacuerdo (1)</label>
+      </div>
+    </div>
+
+    <h4>Claridad del rol</h4>
+    <div class="q" data-q="9">9. En mi trabajo existen espacios de discusión para debatir abiertamente los problemas comunes y diferencias de opinión.
+      <div>
+        <label><input type="radio" name="q9" value="4"> Completamente de acuerdo (4)</label>
+        <label><input type="radio" name="q9" value="3"> Parcialmente de acuerdo (3)</label>
+        <label><input type="radio" name="q9" value="2"> Poco de acuerdo (2)</label>
+        <label><input type="radio" name="q9" value="1"> En desacuerdo (1)</label>
+      </div>
+    </div>
+    <div class="q" data-q="10">10. Puedo realizar el trabajo con la colaboración de mis compañeros de trabajo y/u otras áreas.
+      <div>
+        <label><input type="radio" name="q10" value="4"> Completamente de acuerdo (4)</label>
+        <label><input type="radio" name="q10" value="3"> Parcialmente de acuerdo (3)</label>
+        <label><input type="radio" name="q10" value="2"> Poco de acuerdo (2)</label>
+        <label><input type="radio" name="q10" value="1"> En desacuerdo (1)</label>
+      </div>
+    </div>
+
+    <h4>Organización del trabajo</h4>
+    <div class="q" data-q="11">11. En mi trabajo se informa regularmente de la gestión y logros de la empresa o institución a todos los trabajadores y servidores.
+      <div>
+        <label><input type="radio" name="q11" value="4"> Completamente de acuerdo (4)</label>
+        <label><input type="radio" name="q11" value="3"> Parcialmente de acuerdo (3)</label>
+        <label><input type="radio" name="q11" value="2"> Poco de acuerdo (2)</label>
+        <label><input type="radio" name="q11" value="1"> En desacuerdo (1)</label>
+      </div>
+    </div>
+    <div class="q" data-q="12">12. En mi trabajo tenemos reuniones suficientes y significativas para el cumplimiento de los objetivos.
+      <div>
+        <label><input type="radio" name="q12" value="4"> Completamente de acuerdo (4)</label>
+        <label><input type="radio" name="q12" value="3"> Parcialmente de acuerdo (3)</label>
+        <label><input type="radio" name="q12" value="2"> Poco de acuerdo (2)</label>
+        <label><input type="radio" name="q12" value="1"> En desacuerdo (1)</label>
+      </div>
+    </div>
+    <div class="q" data-q="13">13. Las metas y objetivos en mi trabajo son claros y alcanzables.
+      <div>
+        <label><input type="radio" name="q13" value="4"> Completamente de acuerdo (4)</label>
+        <label><input type="radio" name="q13" value="3"> Parcialmente de acuerdo (3)</label>
+        <label><input type="radio" name="q13" value="2"> Poco de acuerdo (2)</label>
+        <label><input type="radio" name="q13" value="1"> En desacuerdo (1)</label>
+      </div>
+    </div>
+    <div class="q" data-q="14">14. Siempre dispongo de tareas y actividades a realizar en mi jornada y lugar de trabajo.
+      <div>
+        <label><input type="radio" name="q14" value="4"> Completamente de acuerdo (4)</label>
+        <label><input type="radio" name="q14" value="3"> Parcialmente de acuerdo (3)</label>
+        <label><input type="radio" name="q14" value="2"> Poco de acuerdo (2)</label>
+        <label><input type="radio" name="q14" value="1"> En desacuerdo (1)</label>
+      </div>
+    </div>
+
+    <h4>Exigencias del trabajo</h4>
+    <div class="q" data-q="15">15. Después del trabajo tengo la suficiente energía como para realizar otras actividades.
+      <div>
+        <label><input type="radio" name="q15" value="4"> Completamente de acuerdo (4)</label>
+        <label><input type="radio" name="q15" value="3"> Parcialmente de acuerdo (3)</label>
+        <label><input type="radio" name="q15" value="2"> Poco de acuerdo (2)</label>
+        <label><input type="radio" name="q15" value="1"> En desacuerdo (1)</label>
+      </div>
+    </div>
+    <div class="q" data-q="16">16. En mi trabajo puedo realizar pausas de periodo corto.
+      <div>
+        <label><input type="radio" name="q16" value="4"> Completamente de acuerdo (4)</label>
+        <label><input type="radio" name="q16" value="3"> Parcialmente de acuerdo (3)</label>
+        <label><input type="radio" name="q16" value="2"> Poco de acuerdo (2)</label>
+        <label><input type="radio" name="q16" value="1"> En desacuerdo (1)</label>
+      </div>
+    </div>
+    <div class="q" data-q="17">17. Tengo un horario y jornada de trabajo que se ajusta a mis expectativas y exigencias laborales.
+      <div>
+        <label><input type="radio" name="q17" value="4"> Completamente de acuerdo (4)</label>
+        <label><input type="radio" name="q17" value="3"> Parcialmente de acuerdo (3)</label>
+        <label><input type="radio" name="q17" value="2"> Poco de acuerdo (2)</label>
+        <label><input type="radio" name="q17" value="1"> En desacuerdo (1)</label>
+      </div>
+    </div>
+    <div class="q" data-q="18">18. Siento que mi trabajo no es desgastador emocionalmente.
+      <div>
+        <label><input type="radio" name="q18" value="4"> Completamente de acuerdo (4)</label>
+        <label><input type="radio" name="q18" value="3"> Parcialmente de acuerdo (3)</label>
+        <label><input type="radio" name="q18" value="2"> Poco de acuerdo (2)</label>
+        <label><input type="radio" name="q18" value="1"> En desacuerdo (1)</label>
+      </div>
+    </div>
+
+    <h4>Soporte y apoyo</h4>
+    <div class="q" data-q="19">19. El trabajo está organizado de tal manera que fomenta la colaboración de equipo y el diálogo con otras personas.
+      <div>
+        <label><input type="radio" name="q19" value="4"> Completamente de acuerdo (4)</label>
+        <label><input type="radio" name="q19" value="3"> Parcialmente de acuerdo (3)</label>
+        <label><input type="radio" name="q19" value="2"> Poco de acuerdo (2)</label>
+        <label><input type="radio" name="q19" value="1"> En desacuerdo (1)</label>
+      </div>
+    </div>
+    <div class="q" data-q="20">20. En mi trabajo percibo un sentimiento de compañerismo y bienestar con mis colegas.
+      <div>
+        <label><input type="radio" name="q20" value="4"> Completamente de acuerdo (4)</label>
+        <label><input type="radio" name="q20" value="3"> Parcialmente de acuerdo (3)</label>
+        <label><input type="radio" name="q20" value="2"> Poco de acuerdo (2)</label>
+        <label><input type="radio" name="q20" value="1"> En desacuerdo (1)</label>
+      </div>
+    </div>
+    <div class="q" data-q="21">21. En mi trabajo el jefe inmediato me brinda ayuda técnica y administrativa cuando lo requiero.
+      <div>
+        <label><input type="radio" name="q21" value="4"> Completamente de acuerdo (4)</label>
+        <label><input type="radio" name="q21" value="3"> Parcialmente de acuerdo (3)</label>
+        <label><input type="radio" name="q21" value="2"> Poco de acuerdo (2)</label>
+        <label><input type="radio" name="q21" value="1"> En desacuerdo (1)</label>
+      </div>
+    </div>
+    <div class="q" data-q="22">22. En mi trabajo tengo acceso a la atención de un médico, psicólogo, trabajadora social, consejero, etc., cuando lo requiero.
+      <div>
+        <label><input type="radio" name="q22" value="4"> Completamente de acuerdo (4)</label>
+        <label><input type="radio" name="q22" value="3"> Parcialmente de acuerdo (3)</label>
+        <label><input type="radio" name="q22" value="2"> Poco de acuerdo (2)</label>
+        <label><input type="radio" name="q22" value="1"> En desacuerdo (1)</label>
+      </div>
+    </div>
+
+    <h4>Apartamiento</h4>
+    <div class="q" data-q="23">23. En mi trabajo tratan por igual a todos, indistintamente la edad que tengan.
+      <div>
+        <label><input type="radio" name="q23" value="4"> Completamente de acuerdo (4)</label>
+        <label><input type="radio" name="q23" value="3"> Parcialmente de acuerdo (3)</label>
+        <label><input type="radio" name="q23" value="2"> Poco de acuerdo (2)</label>
+        <label><input type="radio" name="q23" value="1"> En desacuerdo (1)</label>
+      </div>
+    </div>
+    <div class="q" data-q="24">24. En mi trabajo los hombres y mujeres tienen las mismas oportunidades.
+      <div>
+        <label><input type="radio" name="q24" value="4"> Completamente de acuerdo (4)</label>
+        <label><input type="radio" name="q24" value="3"> Parcialmente de acuerdo (3)</label>
+        <label><input type="radio" name="q24" value="2"> Poco de acuerdo (2)</label>
+        <label><input type="radio" name="q24" value="1"> En desacuerdo (1)</label>
+      </div>
+    </div>
+    <div class="q" data-q="25">25. En mi trabajo se respeta mi ideología, opinión política, religiosa, nacionalidad y orientación sexual.
+      <div>
+        <label><input type="radio" name="q25" value="4"> Completamente de acuerdo (4)</label>
+        <label><input type="radio" name="q25" value="3"> Parcialmente de acuerdo (3)</label>
+        <label><input type="radio" name="q25" value="2"> Poco de acuerdo (2)</label>
+        <label><input type="radio" name="q25" value="1"> En desacuerdo (1)</label>
+      </div>
+    </div>
+    <div class="q" data-q="26">26. En mi trabajo no hay exclusividad para el uso de los espacios según la jerarquía en la organización.
+      <div>
+        <label><input type="radio" name="q26" value="4"> Completamente de acuerdo (4)</label>
+        <label><input type="radio" name="q26" value="3"> Parcialmente de acuerdo (3)</label>
+        <label><input type="radio" name="q26" value="2"> Poco de acuerdo (2)</label>
+        <label><input type="radio" name="q26" value="1"> En desacuerdo (1)</label>
+      </div>
+    </div>
+
+    <h4>Inclusión laboral</h4>
+    <div class="q" data-q="27">27. En mi trabajo estoy libre de amenazas, humillaciones, ridiculizaciones, burlas, calumnias o difamaciones reiteradas con el fin de causarme daño.
+      <div>
+        <label><input type="radio" name="q27" value="4"> Completamente de acuerdo (4)</label>
+        <label><input type="radio" name="q27" value="3"> Parcialmente de acuerdo (3)</label>
+        <label><input type="radio" name="q27" value="2"> Poco de acuerdo (2)</label>
+        <label><input type="radio" name="q27" value="1"> En desacuerdo (1)</label>
+      </div>
+    </div>
+    <div class="q" data-q="28">28. Tengo un trabajo libre de conflictos estresantes, rumores maliciosos o calumniosos sobre mi persona.
+      <div>
+        <label><input type="radio" name="q28" value="4"> Completamente de acuerdo (4)</label>
+        <label><input type="radio" name="q28" value="3"> Parcialmente de acuerdo (3)</label>
+        <label><input type="radio" name="q28" value="2"> Poco de acuerdo (2)</label>
+        <label><input type="radio" name="q28" value="1"> En desacuerdo (1)</label>
+      </div>
+    </div>
+
+    <h4>Motivación en el trabajo</h4>
+    <div class="q" data-q="29">29. Mi salario está en relación con las funciones que realizo en mi puesto de trabajo.
+      <div>
+        <label><input type="radio" name="q29" value="4"> Completamente de acuerdo (4)</label>
+        <label><input type="radio" name="q29" value="3"> Parcialmente de acuerdo (3)</label>
+        <label><input type="radio" name="q29" value="2"> Poco de acuerdo (2)</label>
+        <label><input type="radio" name="q29" value="1"> En desacuerdo (1)</label>
+      </div>
+    </div>
+    <div class="q" data-q="30">30. Me siento reconocido por el esfuerzo que realizo.
+      <div>
+        <label><input type="radio" name="q30" value="4"> Completamente de acuerdo (4)</label>
+        <label><input type="radio" name="q30" value="3"> Parcialmente de acuerdo (3)</label>
+        <label><input type="radio" name="q30" value="2"> Poco de acuerdo (2)</label>
+        <label><input type="radio" name="q30" value="1"> En desacuerdo (1)</label>
+      </div>
+    </div>
+
+    <h4>Autonomía del trabajo</h4>
+    <div class="q" data-q="31">31. Puedo realizar mi trabajo según el orden de tareas que yo considere, sin afectar las metas u objetivos de mi área.
+      <div>
+        <label><input type="radio" name="q31" value="4"> Completamente de acuerdo (4)</label>
+        <label><input type="radio" name="q31" value="3"> Parcialmente de acuerdo (3)</label>
+        <label><input type="radio" name="q31" value="2"> Poco de acuerdo (2)</label>
+        <label><input type="radio" name="q31" value="1"> En desacuerdo (1)</label>
+      </div>
+    </div>
+    <div class="q" data-q="32">32. Puedo programar mis vacaciones cuando yo lo considere previa coordinación con mi jefe inmediato.
+      <div>
+        <label><input type="radio" name="q32" value="4"> Completamente de acuerdo (4)</label>
+        <label><input type="radio" name="q32" value="3"> Parcialmente de acuerdo (3)</label>
+        <label><input type="radio" name="q32" value="2"> Poco de acuerdo (2)</label>
+        <label><input type="radio" name="q32" value="1"> En desacuerdo (1)</label>
+      </div>
+    </div>
+    <div class="q" data-q="33">33. Tengo influencia sobre las decisiones que afectan mis tareas en el trabajo.
+      <div>
+        <label><input type="radio" name="q33" value="4"> Completamente de acuerdo (4)</label>
+        <label><input type="radio" name="q33" value="3"> Parcialmente de acuerdo (3)</label>
+        <label><input type="radio" name="q33" value="2"> Poco de acuerdo (2)</label>
+        <label><input type="radio" name="q33" value="1"> En desacuerdo (1)</label>
+      </div>
+    </div>
+    <div class="q" data-q="34">34. Puedo dar mi opinión y son tomadas en cuenta por la organización.
+      <div>
+        <label><input type="radio" name="q34" value="4"> Completamente de acuerdo (4)</label>
+        <label><input type="radio" name="q34" value="3"> Parcialmente de acuerdo (3)</label>
+        <label><input type="radio" name="q34" value="2"> Poco de acuerdo (2)</label>
+        <label><input type="radio" name="q34" value="1"> En desacuerdo (1)</label>
+      </div>
+    </div>
+
+    <h4>Condiciones de trabajo</h4>
+    <div class="q" data-q="35">35. Los espacios y ambientes físicos en mi trabajo me brindan el confort suficiente para desarrollar mis actividades.
+      <div>
+        <label><input type="radio" name="q35" value="4"> Completamente de acuerdo (4)</label>
+        <label><input type="radio" name="q35" value="3"> Parcialmente de acuerdo (3)</label>
+        <label><input type="radio" name="q35" value="2"> Poco de acuerdo (2)</label>
+        <label><input type="radio" name="q35" value="1"> En desacuerdo (1)</label>
+      </div>
+    </div>
+    <div class="q" data-q="36">36. Las instalaciones, ambientes, equipos, maquinaria y/o herramientas que utilizo son adecuadas para no sufrir accidentes de trabajo y enfermedades profesionales.
+      <div>
+        <label><input type="radio" name="q36" value="4"> Completamente de acuerdo (4)</label>
+        <label><input type="radio" name="q36" value="3"> Parcialmente de acuerdo (3)</label>
+        <label><input type="radio" name="q36" value="2"> Poco de acuerdo (2)</label>
+        <label><input type="radio" name="q36" value="1"> En desacuerdo (1)</label>
+      </div>
+    </div>
+
+    <h4>Interfase trabajo/familia</h4>
+    <div class="q" data-q="37">37. Siento que mis responsabilidades y obligaciones familiares o personales no afectan el desempeño de mis actividades en el trabajo.
+      <div>
+        <label><input type="radio" name="q37" value="4"> Completamente de acuerdo (4)</label>
+        <label><input type="radio" name="q37" value="3"> Parcialmente de acuerdo (3)</label>
+        <label><input type="radio" name="q37" value="2"> Poco de acuerdo (2)</label>
+        <label><input type="radio" name="q37" value="1"> En desacuerdo (1)</label>
+      </div>
+    </div>
+    <div class="q" data-q="38">38. En mi trabajo puedo atender mis problemas familiares y personales.
+      <div>
+        <label><input type="radio" name="q38" value="4"> Completamente de acuerdo (4)</label>
+        <label><input type="radio" name="q38" value="3"> Parcialmente de acuerdo (3)</label>
+        <label><input type="radio" name="q38" value="2"> Poco de acuerdo (2)</label>
+        <label><input type="radio" name="q38" value="1"> En desacuerdo (1)</label>
+      </div>
+    </div>
+
+    <h4>Seguridad</h4>
+    <div class="q" data-q="39">39. Me siento estable a pesar de los cambios que se presentan en mi trabajo.
+      <div>
+        <label><input type="radio" name="q39" value="4"> Completamente de acuerdo (4)</label>
+        <label><input type="radio" name="q39" value="3"> Parcialmente de acuerdo (3)</label>
+        <label><input type="radio" name="q39" value="2"> Poco de acuerdo (2)</label>
+        <label><input type="radio" name="q39" value="1"> En desacuerdo (1)</label>
+      </div>
+    </div>
+    <div class="q" data-q="40">40. Mi trabajo y los aportes que realizo son valorados y me generan motivación.
+      <div>
+        <label><input type="radio" name="q40" value="4"> Completamente de acuerdo (4)</label>
+        <label><input type="radio" name="q40" value="3"> Parcialmente de acuerdo (3)</label>
+        <label><input type="radio" name="q40" value="2"> Poco de acuerdo (2)</label>
+        <label><input type="radio" name="q40" value="1"> En desacuerdo (1)</label>
+      </div>
+    </div>
+
+    <h4>Salud percibida</h4>
+    <div class="q" data-q="41">41. Considero que el trabajo que realizo no me causa efectos negativos a mi salud física y mental.
+      <div>
+        <label><input type="radio" name="q41" value="4"> Completamente de acuerdo (4)</label>
+        <label><input type="radio" name="q41" value="3"> Parcialmente de acuerdo (3)</label>
+        <label><input type="radio" name="q41" value="2"> Poco de acuerdo (2)</label>
+        <label><input type="radio" name="q41" value="1"> En desacuerdo (1)</label>
+      </div>
+    </div>
+    <div class="q" data-q="42">42. Considero que me encuentro física y mentalmente saludable.
+      <div>
+        <label><input type="radio" name="q42" value="4"> Completamente de acuerdo (4)</label>
+        <label><input type="radio" name="q42" value="3"> Parcialmente de acuerdo (3)</label>
+        <label><input type="radio" name="q42" value="2"> Poco de acuerdo (2)</label>
+        <label><input type="radio" name="q42" value="1"> En desacuerdo (1)</label>
+      </div>
+    </div>
+
+    <h4>Satisfacción con el trabajo</h4>
+    <div class="q" data-q="43">43. ¿Cuál es tu grado de satisfacción en relación con tu trabajo?
+      <div>
+        <label><input type="radio" name="q43" value="4"> Completamente satisfecho (4)</label>
+        <label><input type="radio" name="q43" value="3"> Parcialmente satisfecho (3)</label>
+        <label><input type="radio" name="q43" value="2"> Poco satisfecho (2)</label>
+        <label><input type="radio" name="q43" value="1"> Insatisfecho (1)</label>
+      </div>
+    </div>
+    <div class="q" data-q="44">44. ¿Cuál es tu grado de satisfacción en relación con tu jefe?
+      <div>
+        <label><input type="radio" name="q44" value="4"> Completamente satisfecho (4)</label>
+        <label><input type="radio" name="q44" value="3"> Parcialmente satisfecho (3)</label>
+        <label><input type="radio" name="q44" value="2"> Poco satisfecho (2)</label>
+        <label><input type="radio" name="q44" value="1"> Insatisfecho (1)</label>
+      </div>
+    </div>
+  </div>
+</div>

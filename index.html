@@ -1,17 +1,17 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>PsicoSST Cloud</title>
-  <link rel="stylesheet" href="styles.css" />
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>SaaS Psicosocial – Demo UI</title>
+<link rel="stylesheet" href="styles.css" />
 </head>
 <body>
 <div class="app">
   <!-- SIDEBAR -->
   <aside class="sidebar">
     <div class="brand">
-      <img src="assets/logo.svg" alt="logo" class="logo" />
+      <div class="logo" aria-hidden="true"></div>
       <div>
         <h1>PsicoSST Cloud</h1>
         <div class="muted">Gestión Psicosocial</div>
@@ -23,19 +23,21 @@
     </div>
 
     <nav class="menu" id="menu">
-      <a class="item active" href="#/dashboard" data-view="dashboard">📊 Dashboard</a>
-      <a class="item" href="#/evaluaciones" data-view="evaluaciones">📝 Evaluaciones</a>
-      <a class="item" href="#/reportes" data-view="reportes">📄 Reportes</a>
-      <a class="item" href="#/carpeta" data-view="carpeta">🗂 Carpeta Legal</a>
-      <a class="item" href="#/plan" data-view="plan">✅ Plan de Acción <span class="tag">4 pendientes</span></a>
-      <a class="item" href="#/capacitaciones" data-view="capacitaciones">🎓 Capacitaciones</a>
-      <a class="item" href="#/casos" data-view="casos">🔒 Casos</a>
-      <a class="item" href="#/usuarios" data-view="usuarios">👥 Usuarios</a>
-      <a class="item" href="#/config" data-view="config">⚙️ Configuración</a>
+      <div class="item active" data-view="dashboard">📊 Dashboard</div>
+      <div class="item" data-view="evaluaciones">📝 Evaluaciones</div>
+      <div class="item" data-view="evaluado">🧪 Evaluado</div>
+      <div class="item" data-view="resultados">📈 Resultados</div>
+      <div class="item" data-view="reportes">📄 Reportes</div>
+      <div class="item" data-view="carpeta">🗂 Carpeta Legal</div>
+      <div class="item" data-view="plan">✅ Plan de Acción <span class="tag">4 pendientes</span></div>
+      <div class="item" data-view="capacitaciones">🎓 Capacitaciones</div>
+      <div class="item" data-view="casos">🔒 Casos</div>
+      <div class="item" data-view="usuarios">👥 Usuarios</div>
+      <div class="item" data-view="config">⚙️ Configuración</div>
     </nav>
 
-    <div class="footer-note">
-      <div class="muted small">© 2025 Aparicio Armando</div>
+    <div style="margin-top:16px; border-top:1px solid var(--line); padding-top:12px">
+      <div class="muted" style="font-size:12px">© 2025 Dinámica Operativa</div>
     </div>
   </aside>
 
@@ -44,26 +46,27 @@
     <div class="crumbs">
       <span id="crumb">Dashboard</span>
       <span class="muted">/</span>
-      <span class="muted">Demo modular</span>
+      <span class="muted">Demo visual</span>
     </div>
     <div class="actions">
       <button class="btn" id="btnNew">+ Nueva evaluación</button>
       <button class="btn primary" id="btnZip">⬇️ Carpeta SUNAFIL</button>
+      <button class="btn" id="btnLogout">Salir</button>
     </div>
   </header>
 
-  <!-- MAIN (contenedor donde se inyectan vistas) -->
+  <!-- MAIN -->
   <main class="main">
-    <div id="view-container" class="view-container" aria-live="polite"></div>
+    <div id="main-content"></div>
   </main>
 </div>
 
-<!-- MODAL GENÉRICO -->
-<div class="modal-bg" id="modal-bg" aria-hidden="true">
+<!-- MODALES -->
+<div class="modal-bg" id="modal-bg">
   <div class="modal" role="dialog" aria-modal="true" aria-labelledby="modal-title">
-    <div class="modal-head">
+    <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:8px">
       <h3 id="modal-title">Nueva evaluación</h3>
-      <button class="btn" id="modal-close" aria-label="Cerrar">✖</button>
+      <button class="btn" id="modal-close">✖</button>
     </div>
     <div class="row">
       <div>
@@ -86,18 +89,18 @@
         <label>Modo</label>
         <select><option>Anónimo</option><option>Identificado</option></select>
       </div>
-      <div class="full">
+      <div style="grid-column:1/-1">
         <label>Notas</label>
         <textarea rows="4" placeholder="Instrucciones para participantes…"></textarea>
       </div>
     </div>
-    <div class="modal-actions">
+    <div style="display:flex; justify-content:flex-end; gap:8px; margin-top:12px">
       <button class="btn" id="modal-cancel">Cancelar</button>
       <button class="btn primary">Crear</button>
     </div>
   </div>
 </div>
 
-<script src="main.js"></script>
+<script src="scripts/app.js"></script>
 </body>
 </html>

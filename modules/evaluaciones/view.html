@@ -1,0 +1,29 @@
+<div class="card">
+  <div class="toolbar">
+    <button class="btn primary" id="btnNuevaEval">+ Crear evaluación</button>
+    <input class="input" id="eval-filtro" placeholder="Filtrar por área/puesto…" />
+    <span class="badge" id="eval-count">0 registradas</span>
+  </div>
+  <div class="grid" style="grid-template-columns: repeat(12, 1fr); margin-bottom:10px">
+    <div style="grid-column: span 4">
+      <label>Nombre de evaluación</label>
+      <input id="eval-nombre" class="input" placeholder="Ej. MINSA 2024 - Ventas" />
+    </div>
+    <div style="grid-column: span 4">
+      <label>Área</label>
+      <input id="eval-area" class="input" placeholder="Ej. Ventas" />
+    </div>
+    <div style="grid-column: span 2">
+      <label>Periodo</label>
+      <input id="eval-periodo" type="month" class="input" />
+    </div>
+    <div style="grid-column: span 2; display:flex; align-items:flex-end; justify-content:flex-end; gap:8px">
+      <button class="btn primary" id="btnGuardarEval">Guardar evaluación</button>
+      <span id="eval-msg" class="pill" style="display:none">Guardado</span>
+    </div>
+  </div>
+  <table class="table">
+    <thead><tr><th>Evaluación</th><th>Área</th><th>Periodo</th><th>Estado</th><th>Acciones</th></tr></thead>
+    <tbody id="evals-list"></tbody>
+  </table>
+</div>

@@ -1,0 +1,37 @@
+<div class="card">
+  <div class="toolbar">
+    <input class="input" id="cap-buscar" placeholder="Buscar curso…" />
+    <span class="badge">Próximas: 2</span>
+  </div>
+  <div class="grid" style="grid-template-columns: repeat(12, 1fr); margin-bottom:10px">
+    <div style="grid-column: span 4">
+      <label>Curso</label>
+      <input id="cap-curso" class="input" placeholder="Ej. Manejo del Estrés" />
+    </div>
+    <div style="grid-column: span 3">
+      <label>Fecha</label>
+      <input id="cap-fecha" type="date" class="input" />
+    </div>
+    <div style="grid-column: span 3">
+      <label>Área</label>
+      <input id="cap-area" class="input" placeholder="Ej. Operaciones" />
+    </div>
+    <div style="grid-column: span 2">
+      <label>Inscritos</label>
+      <input id="cap-inscritos" type="number" min="0" class="input" placeholder="0" />
+    </div>
+    <div style="grid-column: span 6">
+      <label>Documento (PDF/imagen)</label>
+      <input id="cap-file" type="file" class="input" accept="application/pdf,image/*" />
+      <div id="cap-file-name" class="muted" style="font-size:12px; margin-top:4px"></div>
+    </div>
+    <div style="grid-column: span 6; display:flex; align-items:flex-end; justify-content:flex-end; gap:8px">
+      <button class="btn primary" id="btnGuardarCap">Guardar capacitación</button>
+      <span id="cap-msg" class="pill" style="display:none">Guardado</span>
+    </div>
+  </div>
+  <table class="table">
+    <thead><tr><th>Curso</th><th>Fecha</th><th>Área</th><th>Inscritos</th><th>Documento</th><th>Acciones</th></tr></thead>
+    <tbody id="caps-list"></tbody>
+  </table>
+</div>

@@ -1,0 +1,15 @@
+<div class="card">
+  <h3>Evaluado – Aplicación de cuestionario</h3>
+  <p class="muted">Selecciona una evaluación disponible y haz clic en "Iniciar".</p>
+  <div class="grid" style="grid-template-columns: repeat(12, 1fr); margin-bottom:10px">
+    <div style="grid-column: span 6">
+      <label>Evaluación</label>
+      <select id="eval-select"></select>
+    </div>
+    <div style="grid-column: span 6; display:flex; align-items:flex-end; justify-content:flex-end; gap:8px">
+      <button class="btn primary" id="btnIniciarEval">Iniciar</button>
+    </div>
+  </div>
+  <div id="evalado-msg" class="pill" style="display:none">Selecciona una evaluación</div>
+  <div class="muted" style="font-size:12px">Las respuestas son anónimas. Se guardarán localmente para esta demostración.</div>
+</div>

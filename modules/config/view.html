@@ -1,0 +1,32 @@
+<div class="card">
+  <h3>Parámetros generales</h3>
+  <div class="grid" style="grid-template-columns: repeat(12, 1fr)">
+    <div style="grid-column: span 6">
+      <label>Nombre de la empresa</label>
+      <input id="empresa-nombre" class="input" placeholder="Ej. Dinámica Operativa SAC" />
+    </div>
+    <div style="grid-column: span 6">
+      <label>RUC</label>
+      <input id="empresa-ruc" class="input" placeholder="20XXXXXXXXX" />
+    </div>
+    <div style="grid-column: span 6">
+      <label>Instrumento por defecto</label>
+      <select id="empresa-instrumento"><option>MINSA 2024</option><option>COPSOQ</option></select>
+    </div>
+    <div style="grid-column: span 6">
+      <label>Firma del psicólogo (texto)</label>
+      <input id="empresa-firma" class="input" placeholder="Lic. Aparicio Armando Capcha Chávez – C.Ps.P XXXXX – Habilitado" />
+    </div>
+  </div>
+  <div style="margin-top:12px">
+    <button class="btn primary" id="btnGuardarEmpresa">Guardar empresa</button>
+    <span id="empresa-msg" class="pill" style="display:none; margin-left:8px">Guardado</span>
+  </div>
+  <div style="margin-top:16px">
+    <h3>Empresas guardadas</h3>
+    <table class="table" id="tabla-empresas">
+      <thead><tr><th>Empresa</th><th>RUC</th><th>Instrumento</th><th>Acciones</th></tr></thead>
+      <tbody id="empresas-list"></tbody>
+    </table>
+  </div>
+</div>
