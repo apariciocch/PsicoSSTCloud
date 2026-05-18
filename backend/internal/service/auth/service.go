@@ -82,7 +82,7 @@ func (s *AuthService) Login(ctx context.Context, req *dto.LoginRequest) (*dto.Lo
 			lockTime := time.Now().Add(time.Duration(30) * time.Minute)
 			user.LockedUntil = &lockTime
 		}
-		_ = s.userRepo.Update(ctx, user)
+		_, _ = s.userRepo.Update(ctx, user.ID, user)
 
 		// Auditoría
 		s.logFailedLogin(ctx, user.Email, "Invalid password")
@@ -95,7 +95,7 @@ func (s *AuthService) Login(ctx context.Context, req *dto.LoginRequest) (*dto.Lo
 	user.LockedUntil = nil
 	now := time.Now()
 	user.LastLogin = &now
-	_ = s.userRepo.Update(ctx, user)
+	_, _ = s.userRepo.Update(ctx, user.ID, user)
 
 	// Obtener rol
 	role, err := s.roleRepo.GetByID(ctx, user.RoleID)
@@ -257,7 +257,7 @@ func (s *AuthService) ChangePassword(ctx context.Context, userID, currentPasswor
 
 	// Actualizar usuario
 	user.PasswordHash = newHash
-	if err := s.userRepo.Update(ctx, user); err != nil {
+	if _, err := s.userRepo.Update(ctx, user.ID, user); err != nil {
 		return fmt.Errorf("error updating user: %w", err)
 	}
 

@@ -10,6 +10,20 @@ import (
 	"github.com/go-chi/chi/v5"
 )
 
+// handlerWrapper convierte un http.Handler a http.HandlerFunc
+func handlerWrapper(h http.Handler) http.HandlerFunc {
+	return func(w http.ResponseWriter, r *http.Request) {
+		h.ServeHTTP(w, r)
+	}
+}
+
+// notImplementedHandler handler que retorna 501 Not Implemented
+func notImplementedHandler(w http.ResponseWriter, r *http.Request) {
+	w.Header().Set("Content-Type", "application/json")
+	w.WriteHeader(http.StatusNotImplemented)
+	w.Write([]byte(`{"error":"Not implemented"}`))
+}
+
 // SetupRoutes configura todas las rutas de la API
 func SetupRoutes(
 	router *chi.Mux,
@@ -22,6 +36,10 @@ func SetupRoutes(
 	router.Use(middleware.CORSMiddleware([]string{"*"})) // Configurar origins en config
 	router.Use(middleware.RequestLogger)
 	router.Use(middleware.RateLimit(rateLimiter))
+
+	// ==================== DASHBOARD ====================
+	router.Get("/", handler.DashboardHandler)
+	router.Get("/dashboard", handler.DashboardHandler)
 
 	// ==================== AUTH ====================
 	router.Route("/api/v1/auth", func(r chi.Router) {
@@ -50,130 +68,130 @@ func SetupRoutes(
 
 		// ==================== USERS ====================
 		r.Route("/users", func(r chi.Router) {
-			r.Get("/", middleware.CheckPermission(config.PermUsersView)(
-				http.HandlerFunc(nil), // Será reemplazado por handler real
-			))
-			r.Post("/", middleware.CheckPermission(config.PermUsersCreate)(
-				http.HandlerFunc(nil),
-			))
-			r.Get("/{id}", middleware.CheckPermission(config.PermUsersView)(
-				http.HandlerFunc(nil),
-			))
-			r.Put("/{id}", middleware.CheckPermission(config.PermUsersEdit)(
-				http.HandlerFunc(nil),
-			))
-			r.Delete("/{id}", middleware.CheckPermission(config.PermUsersDelete)(
-				http.HandlerFunc(nil),
-			))
+			r.Get("/", handlerWrapper(middleware.CheckPermission(config.PermUsersView)(
+				http.HandlerFunc(notImplementedHandler),
+			)))
+			r.Post("/", handlerWrapper(middleware.CheckPermission(config.PermUsersCreate)(
+				http.HandlerFunc(notImplementedHandler),
+			)))
+			r.Get("/{id}", handlerWrapper(middleware.CheckPermission(config.PermUsersView)(
+				http.HandlerFunc(notImplementedHandler),
+			)))
+			r.Put("/{id}", handlerWrapper(middleware.CheckPermission(config.PermUsersEdit)(
+				http.HandlerFunc(notImplementedHandler),
+			)))
+			r.Delete("/{id}", handlerWrapper(middleware.CheckPermission(config.PermUsersDelete)(
+				http.HandlerFunc(notImplementedHandler),
+			)))
 		})
 
 		// ==================== EMPLOYEES ====================
 		r.Route("/employees", func(r chi.Router) {
-			r.Get("/", middleware.CheckPermission(config.PermEmployeesView)(
-				http.HandlerFunc(nil),
-			))
-			r.Post("/", middleware.CheckPermission(config.PermEmployeesCreate)(
-				http.HandlerFunc(nil),
-			))
-			r.Get("/{id}", middleware.CheckPermission(config.PermEmployeesView)(
-				http.HandlerFunc(nil),
-			))
-			r.Put("/{id}", middleware.CheckPermission(config.PermEmployeesEdit)(
-				http.HandlerFunc(nil),
-			))
+			r.Get("/", handlerWrapper(middleware.CheckPermission(config.PermEmployeesView)(
+				http.HandlerFunc(notImplementedHandler),
+			)))
+			r.Post("/", handlerWrapper(middleware.CheckPermission(config.PermEmployeesCreate)(
+				http.HandlerFunc(notImplementedHandler),
+			)))
+			r.Get("/{id}", handlerWrapper(middleware.CheckPermission(config.PermEmployeesView)(
+				http.HandlerFunc(notImplementedHandler),
+			)))
+			r.Put("/{id}", handlerWrapper(middleware.CheckPermission(config.PermEmployeesEdit)(
+				http.HandlerFunc(notImplementedHandler),
+			)))
 		})
 
 		// ==================== OBSERVATIONS ====================
 		r.Route("/observations", func(r chi.Router) {
-			r.Get("/", middleware.CheckPermission(config.PermObservationsView)(
-				http.HandlerFunc(nil),
-			))
-			r.Post("/", middleware.CheckPermission(config.PermObservationsCreate)(
-				http.HandlerFunc(nil),
-			))
-			r.Get("/{id}", middleware.CheckPermission(config.PermObservationsView)(
-				http.HandlerFunc(nil),
-			))
-			r.Put("/{id}", middleware.CheckPermission(config.PermObservationsEdit)(
-				http.HandlerFunc(nil),
-			))
-			r.Delete("/{id}", middleware.CheckPermission(config.PermObservationsDelete)(
-				http.HandlerFunc(nil),
-			))
+			r.Get("/", handlerWrapper(middleware.CheckPermission(config.PermObservationsView)(
+				http.HandlerFunc(notImplementedHandler),
+			)))
+			r.Post("/", handlerWrapper(middleware.CheckPermission(config.PermObservationsCreate)(
+				http.HandlerFunc(notImplementedHandler),
+			)))
+			r.Get("/{id}", handlerWrapper(middleware.CheckPermission(config.PermObservationsView)(
+				http.HandlerFunc(notImplementedHandler),
+			)))
+			r.Put("/{id}", handlerWrapper(middleware.CheckPermission(config.PermObservationsEdit)(
+				http.HandlerFunc(notImplementedHandler),
+			)))
+			r.Delete("/{id}", handlerWrapper(middleware.CheckPermission(config.PermObservationsDelete)(
+				http.HandlerFunc(notImplementedHandler),
+			)))
 		})
 
 		// ==================== INCIDENTS ====================
 		r.Route("/incidents", func(r chi.Router) {
-			r.Get("/", middleware.CheckPermission(config.PermIncidentsView)(
-				http.HandlerFunc(nil),
-			))
-			r.Post("/", middleware.CheckPermission(config.PermIncidentsCreate)(
-				http.HandlerFunc(nil),
-			))
-			r.Get("/{id}", middleware.CheckPermission(config.PermIncidentsView)(
-				http.HandlerFunc(nil),
-			))
-			r.Put("/{id}", middleware.CheckPermission(config.PermIncidentsEdit)(
-				http.HandlerFunc(nil),
-			))
+			r.Get("/", handlerWrapper(middleware.CheckPermission(config.PermIncidentsView)(
+				http.HandlerFunc(notImplementedHandler),
+			)))
+			r.Post("/", handlerWrapper(middleware.CheckPermission(config.PermIncidentsCreate)(
+				http.HandlerFunc(notImplementedHandler),
+			)))
+			r.Get("/{id}", handlerWrapper(middleware.CheckPermission(config.PermIncidentsView)(
+				http.HandlerFunc(notImplementedHandler),
+			)))
+			r.Put("/{id}", handlerWrapper(middleware.CheckPermission(config.PermIncidentsEdit)(
+				http.HandlerFunc(notImplementedHandler),
+			)))
 		})
 
 		// ==================== CORRECTIVE ACTIONS ====================
 		r.Route("/corrective-actions", func(r chi.Router) {
-			r.Get("/", middleware.CheckPermission(config.PermCorrectiveActionsView)(
-				http.HandlerFunc(nil),
-			))
-			r.Post("/", middleware.CheckPermission(config.PermCorrectiveActionsCreate)(
-				http.HandlerFunc(nil),
-			))
-			r.Get("/{id}", middleware.CheckPermission(config.PermCorrectiveActionsView)(
-				http.HandlerFunc(nil),
-			))
-			r.Put("/{id}", middleware.CheckPermission(config.PermCorrectiveActionsEdit)(
-				http.HandlerFunc(nil),
-			))
+			r.Get("/", handlerWrapper(middleware.CheckPermission(config.PermCorrectiveActionsView)(
+				http.HandlerFunc(notImplementedHandler),
+			)))
+			r.Post("/", handlerWrapper(middleware.CheckPermission(config.PermCorrectiveActionsCreate)(
+				http.HandlerFunc(notImplementedHandler),
+			)))
+			r.Get("/{id}", handlerWrapper(middleware.CheckPermission(config.PermCorrectiveActionsView)(
+				http.HandlerFunc(notImplementedHandler),
+			)))
+			r.Put("/{id}", handlerWrapper(middleware.CheckPermission(config.PermCorrectiveActionsEdit)(
+				http.HandlerFunc(notImplementedHandler),
+			)))
 		})
 
 		// ==================== ANALYTICS ====================
 		r.Route("/analytics", func(r chi.Router) {
-			r.Get("/dashboard", middleware.CheckPermission(config.PermAnalyticsView)(
-				http.HandlerFunc(nil),
-			))
-			r.Get("/kpis", middleware.CheckPermission(config.PermAnalyticsView)(
-				http.HandlerFunc(nil),
-			))
-			r.Get("/trends", middleware.CheckPermission(config.PermAnalyticsView)(
-				http.HandlerFunc(nil),
-			))
+			r.Get("/dashboard", handlerWrapper(middleware.CheckPermission(config.PermAnalyticsView)(
+				http.HandlerFunc(notImplementedHandler),
+			)))
+			r.Get("/kpis", handlerWrapper(middleware.CheckPermission(config.PermAnalyticsView)(
+				http.HandlerFunc(notImplementedHandler),
+			)))
+			r.Get("/trends", handlerWrapper(middleware.CheckPermission(config.PermAnalyticsView)(
+				http.HandlerFunc(notImplementedHandler),
+			)))
 		})
 
 		// ==================== REPORTS ====================
 		r.Route("/reports", func(r chi.Router) {
-			r.Get("/", middleware.CheckPermission(config.PermReportsGenerate)(
-				http.HandlerFunc(nil),
-			))
-			r.Post("/", middleware.CheckPermission(config.PermReportsGenerate)(
-				http.HandlerFunc(nil),
-			))
-			r.Get("/{id}/download", middleware.CheckPermission(config.PermReportsExport)(
-				http.HandlerFunc(nil),
-			))
+			r.Get("/", handlerWrapper(middleware.CheckPermission(config.PermReportsGenerate)(
+				http.HandlerFunc(notImplementedHandler),
+			)))
+			r.Post("/", handlerWrapper(middleware.CheckPermission(config.PermReportsGenerate)(
+				http.HandlerFunc(notImplementedHandler),
+			)))
+			r.Get("/{id}/download", handlerWrapper(middleware.CheckPermission(config.PermReportsExport)(
+				http.HandlerFunc(notImplementedHandler),
+			)))
 		})
 
 		// ==================== AUDIT LOGS ====================
 		r.Route("/audit-logs", func(r chi.Router) {
-			r.Get("/", middleware.CheckPermission(config.PermAuditLogsView)(
-				http.HandlerFunc(nil),
-			))
-			r.Get("/{id}", middleware.CheckPermission(config.PermAuditLogsView)(
-				http.HandlerFunc(nil),
-			))
+			r.Get("/", handlerWrapper(middleware.CheckPermission(config.PermAuditLogsView)(
+				http.HandlerFunc(notImplementedHandler),
+			)))
+			r.Get("/{id}", handlerWrapper(middleware.CheckPermission(config.PermAuditLogsView)(
+				http.HandlerFunc(notImplementedHandler),
+			)))
 		})
 
 		// ==================== NOTIFICATIONS ====================
 		r.Route("/notifications", func(r chi.Router) {
-			r.Get("/", http.HandlerFunc(nil))
-			r.Get("/unread", http.HandlerFunc(nil))
+			r.Get("/", http.HandlerFunc(notImplementedHandler))
+			r.Get("/unread", http.HandlerFunc(notImplementedHandler))
 			r.Put("/{id}/read", http.HandlerFunc(nil))
 			r.Put("/mark-all-as-read", http.HandlerFunc(nil))
 		})

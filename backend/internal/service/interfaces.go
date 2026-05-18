@@ -1,5 +1,4 @@
 package service
-package service
 
 import (
 	"context"
@@ -43,15 +42,6 @@ type ObservationService interface {
 	Create(ctx context.Context, req *dto.CreateObservationRequest, userID string) (*entities.Observation, error)
 	Update(ctx context.Context, id string, req *dto.UpdateObservationRequest) (*entities.Observation, error)
 	Delete(ctx context.Context, id string) error
-}
-
-// UpdateObservationRequest para actualizar observaciones
-type UpdateObservationRequest struct {
-	Comments               *string
-	Recommendations        *string
-	RequiresAction         *bool
-	RequiresIncidentReport *bool
-	OverallStatus          *string
 }
 
 // AnalyticsService interfaz para operaciones de analytics

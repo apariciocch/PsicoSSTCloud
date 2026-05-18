@@ -10,6 +10,7 @@ import (
 	"time"
 
 	"github.com/apariciocch/psicosstcloud/internal/config"
+	"github.com/apariciocch/psicosstcloud/internal/domain/entities"
 	"github.com/apariciocch/psicosstcloud/internal/handler"
 	"github.com/apariciocch/psicosstcloud/internal/middleware"
 	"github.com/apariciocch/psicosstcloud/internal/pkg/logger"
@@ -61,11 +62,12 @@ func main() {
 
 	passwordManager := password.NewManager()
 
-	// TODO: Implementar repositorios reales con PocketBase
-	// Por ahora placeholder
-	var userRepo repository.UserRepository
-	var roleRepo repository.RoleRepository
-	var auditService authService.AuditService
+	// Inicializar repositorios en memoria (TODO: conectar a PocketBase cuando esté listo)
+	userRepo := repository.NewInMemoryUserRepository()
+	roleRepo := repository.NewInMemoryRoleRepository()
+
+	// Crear un audit service simple
+	auditService := &SimpleAuditService{}
 
 	// Crear servicio de autenticación
 	authServiceImpl := authService.NewAuthService(
@@ -125,4 +127,12 @@ func main() {
 	}
 
 	logger.Info("Server stopped")
+}
+
+// SimpleAuditService implementación simple de auditoría
+type SimpleAuditService struct{}
+
+func (s *SimpleAuditService) Log(ctx context.Context, audit *entities.AuditLog) error {
+	// Por ahora solo log, implementación real cuando se integre con base de datos
+	return nil
 }
