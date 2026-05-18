@@ -1,0 +1,95 @@
+version: '3.9'
+
+services:
+  # ==================== PocketBase ====================
+  pocketbase:
+    image: ghcr.io/pocketbase/pocketbase:latest
+    container_name: pocketbase
+    ports:
+      - "8090:8090"
+    environment:
+      - POCKETBASE_AUTO_BACKUP=true
+    volumes:
+      - pocketbase_data:/pb_data
+      - ./pocketbase:/pb_public
+    networks:
+      - psicosst-network
+    healthcheck:
+      test: ["CMD", "wget", "--spider", "-q", "http://localhost:8090/api/health"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    restart: unless-stopped
+
+  # ==================== Backend Go ====================
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    container_name: psicosst-backend
+    ports:
+      - "8080:8080"
+    environment:
+      # Servidor
+      SERVER_HOST: 0.0.0.0
+      SERVER_PORT: 8080
+      ENVIRONMENT: development
+      
+      # PocketBase
+      POCKETBASE_URL: http://pocketbase:8090
+      POCKETBASE_ADMIN_EMAIL: ${POCKETBASE_ADMIN_EMAIL:-admin@example.com}
+      POCKETBASE_ADMIN_PASSWORD: ${POCKETBASE_ADMIN_PASSWORD:-secure_password}
+      
+      # JWT
+      JWT_SECRET: ${JWT_SECRET:-your_super_secret_key_min_32_characters_long_here_xxxx}
+      JWT_EXPIRATION: 900
+      JWT_REFRESH_EXPIRATION: 604800
+      
+      # Seguridad
+      CORS_ORIGINS: http://localhost:3000,http://localhost:5173
+      RATE_LIMIT_REQUESTS: 100
+      RATE_LIMIT_WINDOW: 60
+      
+      # Logs
+      LOG_LEVEL: info
+      LOG_FORMAT: json
+    volumes:
+      - ./backend:/app
+      - backend_storage:/app/storage
+    networks:
+      - psicosst-network
+    depends_on:
+      pocketbase:
+        condition: service_healthy
+    healthcheck:
+      test: ["CMD", "wget", "--spider", "-q", "http://localhost:8080/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+    restart: unless-stopped
+
+  # ==================== Frontend (Ejemplo con Node) ====================
+  # frontend:
+  #   build:
+  #     context: ./frontend
+  #     dockerfile: Dockerfile
+  #   container_name: psicosst-frontend
+  #   ports:
+  #     - "3000:3000"
+  #   environment:
+  #     REACT_APP_API_URL: http://localhost:8080/api/v1
+  #   networks:
+  #     - psicosst-network
+  #   depends_on:
+  #     - backend
+  #   restart: unless-stopped
+
+volumes:
+  pocketbase_data:
+    driver: local
+  backend_storage:
+    driver: local
+
+networks:
+  psicosst-network:
+    driver: bridge
