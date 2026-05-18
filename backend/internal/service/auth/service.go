@@ -1,5 +1,4 @@
 package auth
-package auth
 
 import (
 	"context"
@@ -16,11 +15,11 @@ import (
 
 // AuthService implementación de autenticación
 type AuthService struct {
-	userRepo      repository.UserRepository
-	roleRepo      repository.RoleRepository
-	jwtManager    *jwt.Manager
-	passwordMgr   *password.Manager
-	auditService  AuditService
+	userRepo     repository.UserRepository
+	roleRepo     repository.RoleRepository
+	jwtManager   *jwt.Manager
+	passwordMgr  *password.Manager
+	auditService AuditService
 }
 
 // AuditService para logs de auditoría

@@ -1,13 +1,10 @@
 package repository
-package repository
 
 import (
 	"context"
 	"fmt"
 
 	"github.com/pocketbase/pocketbase"
-	"github.com/pocketbase/pocketbase/core"
-	"github.com/pocketbase/pocketbase/daos"
 )
 
 // PocketBaseClient cliente para PocketBase

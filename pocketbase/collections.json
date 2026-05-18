@@ -1,0 +1,1402 @@
+[
+  {
+    "id": "roles",
+    "name": "roles",
+    "type": "base",
+    "system": false,
+    "listRule": "@request.auth.id != ''",
+    "viewRule": "@request.auth.id != ''",
+    "createRule": "(@request.auth.id != '') && (@request.auth.role_id in (select id from roles where slug = 'admin'))",
+    "updateRule": "(@request.auth.id != '') && (@request.auth.role_id in (select id from roles where slug = 'admin'))",
+    "deleteRule": "(@request.auth.id != '') && (@request.auth.role_id in (select id from roles where slug = 'admin'))",
+    "schema": [
+      {
+        "id": "name",
+        "name": "name",
+        "type": "text",
+        "system": false,
+        "required": true,
+        "unique": false,
+        "options": {
+          "min": 3,
+          "max": 100,
+          "pattern": ""
+        }
+      },
+      {
+        "id": "slug",
+        "name": "slug",
+        "type": "text",
+        "system": false,
+        "required": true,
+        "unique": true,
+        "options": {
+          "min": 3,
+          "max": 50,
+          "pattern": ""
+        }
+      },
+      {
+        "id": "description",
+        "name": "description",
+        "type": "text",
+        "system": false,
+        "required": true,
+        "unique": false,
+        "options": {
+          "min": 10,
+          "max": 500,
+          "pattern": ""
+        }
+      },
+      {
+        "id": "permissions",
+        "name": "permissions",
+        "type": "json",
+        "system": false,
+        "required": true,
+        "unique": false,
+        "options": {}
+      },
+      {
+        "id": "level",
+        "name": "level",
+        "type": "number",
+        "system": false,
+        "required": true,
+        "unique": false,
+        "options": {
+          "min": 1,
+          "max": 100
+        }
+      },
+      {
+        "id": "is_system_role",
+        "name": "is_system_role",
+        "type": "bool",
+        "system": false,
+        "required": true,
+        "unique": false,
+        "options": {}
+      }
+    ]
+  },
+  {
+    "id": "users",
+    "name": "users",
+    "type": "base",
+    "system": false,
+    "listRule": "(@request.auth.id != '') && (id = @request.auth.id || @request.auth.is_super_admin = true)",
+    "viewRule": "(@request.auth.id != '') && (id = @request.auth.id || @request.auth.is_super_admin = true)",
+    "createRule": "(@request.auth.id != '') && (@request.auth.role_id in (select id from roles where slug in ('admin', 'supervisor')))",
+    "updateRule": "(@request.auth.id != '') && (id = @request.auth.id || @request.auth.is_super_admin = true)",
+    "deleteRule": "(@request.auth.id != '') && (@request.auth.role_id in (select id from roles where slug = 'admin'))",
+    "schema": [
+      {
+        "id": "email",
+        "name": "email",
+        "type": "email",
+        "system": false,
+        "required": true,
+        "unique": true,
+        "options": {}
+      },
+      {
+        "id": "username",
+        "name": "username",
+        "type": "text",
+        "system": false,
+        "required": true,
+        "unique": true,
+        "options": {
+          "min": 3,
+          "max": 50,
+          "pattern": ""
+        }
+      },
+      {
+        "id": "password_hash",
+        "name": "password_hash",
+        "type": "text",
+        "system": false,
+        "required": true,
+        "unique": false,
+        "options": {}
+      },
+      {
+        "id": "role_id",
+        "name": "role_id",
+        "type": "relation",
+        "system": false,
+        "required": true,
+        "unique": false,
+        "options": {
+          "collectionId": "roles",
+          "cascadeDelete": false,
+          "minSelect": null,
+          "maxSelect": 1,
+          "displayFields": ["name"]
+        }
+      },
+      {
+        "id": "is_active",
+        "name": "is_active",
+        "type": "bool",
+        "system": false,
+        "required": false,
+        "unique": false,
+        "options": {}
+      },
+      {
+        "id": "failed_attempts",
+        "name": "failed_attempts",
+        "type": "number",
+        "system": false,
+        "required": false,
+        "unique": false,
+        "options": {
+          "min": 0,
+          "max": null
+        }
+      },
+      {
+        "id": "locked_until",
+        "name": "locked_until",
+        "type": "date",
+        "system": false,
+        "required": false,
+        "unique": false,
+        "options": {}
+      }
+    ]
+  },
+  {
+    "id": "work_areas",
+    "name": "work_areas",
+    "type": "base",
+    "system": false,
+    "listRule": "@request.auth.id != ''",
+    "viewRule": "@request.auth.id != ''",
+    "createRule": "(@request.auth.id != '') && (@request.auth.role_id in (select id from roles where slug in ('admin', 'supervisor')))",
+    "updateRule": "(@request.auth.id != '') && (@request.auth.role_id in (select id from roles where slug in ('admin', 'supervisor')))",
+    "deleteRule": "(@request.auth.id != '') && (@request.auth.role_id in (select id from roles where slug = 'admin'))",
+    "schema": [
+      {
+        "id": "name",
+        "name": "name",
+        "type": "text",
+        "system": false,
+        "required": true,
+        "unique": true,
+        "options": {
+          "min": 3,
+          "max": 100,
+          "pattern": ""
+        }
+      },
+      {
+        "id": "description",
+        "name": "description",
+        "type": "text",
+        "system": false,
+        "required": false,
+        "unique": false,
+        "options": {
+          "max": 500,
+          "pattern": ""
+        }
+      },
+      {
+        "id": "location",
+        "name": "location",
+        "type": "text",
+        "system": false,
+        "required": false,
+        "unique": false,
+        "options": {
+          "max": 200,
+          "pattern": ""
+        }
+      },
+      {
+        "id": "risk_level",
+        "name": "risk_level",
+        "type": "select",
+        "system": false,
+        "required": false,
+        "unique": false,
+        "options": {
+          "maxSelect": 1,
+          "values": ["low", "medium", "high", "critical"]
+        }
+      },
+      {
+        "id": "is_active",
+        "name": "is_active",
+        "type": "bool",
+        "system": false,
+        "required": false,
+        "unique": false,
+        "options": {}
+      }
+    ]
+  },
+  {
+    "id": "employees",
+    "name": "employees",
+    "type": "base",
+    "system": false,
+    "listRule": "@request.auth.id != ''",
+    "viewRule": "@request.auth.id != ''",
+    "createRule": "(@request.auth.id != '') && (@request.auth.role_id in (select id from roles where slug in ('admin', 'supervisor')))",
+    "updateRule": "(@request.auth.id != '') && (@request.auth.role_id in (select id from roles where slug in ('admin', 'supervisor')))",
+    "deleteRule": "(@request.auth.id != '') && (@request.auth.role_id in (select id from roles where slug = 'admin'))",
+    "schema": [
+      {
+        "id": "first_name",
+        "name": "first_name",
+        "type": "text",
+        "system": false,
+        "required": true,
+        "unique": false,
+        "options": {
+          "min": 2,
+          "max": 100,
+          "pattern": ""
+        }
+      },
+      {
+        "id": "last_name",
+        "name": "last_name",
+        "type": "text",
+        "system": false,
+        "required": true,
+        "unique": false,
+        "options": {
+          "min": 2,
+          "max": 100,
+          "pattern": ""
+        }
+      },
+      {
+        "id": "email",
+        "name": "email",
+        "type": "email",
+        "system": false,
+        "required": true,
+        "unique": true,
+        "options": {}
+      },
+      {
+        "id": "document_number",
+        "name": "document_number",
+        "type": "text",
+        "system": false,
+        "required": true,
+        "unique": true,
+        "options": {
+          "min": 5,
+          "max": 20,
+          "pattern": ""
+        }
+      },
+      {
+        "id": "phone",
+        "name": "phone",
+        "type": "text",
+        "system": false,
+        "required": false,
+        "unique": false,
+        "options": {
+          "max": 20,
+          "pattern": ""
+        }
+      },
+      {
+        "id": "work_area_id",
+        "name": "work_area_id",
+        "type": "relation",
+        "system": false,
+        "required": true,
+        "unique": false,
+        "options": {
+          "collectionId": "work_areas",
+          "cascadeDelete": false,
+          "minSelect": null,
+          "maxSelect": 1,
+          "displayFields": ["name"]
+        }
+      },
+      {
+        "id": "job_position",
+        "name": "job_position",
+        "type": "text",
+        "system": false,
+        "required": true,
+        "unique": false,
+        "options": {
+          "min": 3,
+          "max": 100,
+          "pattern": ""
+        }
+      },
+      {
+        "id": "hire_date",
+        "name": "hire_date",
+        "type": "date",
+        "system": false,
+        "required": true,
+        "unique": false,
+        "options": {}
+      },
+      {
+        "id": "is_active",
+        "name": "is_active",
+        "type": "bool",
+        "system": false,
+        "required": false,
+        "unique": false,
+        "options": {}
+      }
+    ]
+  },
+  {
+    "id": "behavior_categories",
+    "name": "behavior_categories",
+    "type": "base",
+    "system": false,
+    "listRule": "@request.auth.id != ''",
+    "viewRule": "@request.auth.id != ''",
+    "createRule": "(@request.auth.id != '') && (@request.auth.role_id in (select id from roles where slug in ('admin', 'supervisor')))",
+    "updateRule": "(@request.auth.id != '') && (@request.auth.role_id in (select id from roles where slug in ('admin', 'supervisor')))",
+    "deleteRule": "(@request.auth.id != '') && (@request.auth.role_id in (select id from roles where slug = 'admin'))",
+    "schema": [
+      {
+        "id": "name",
+        "name": "name",
+        "type": "text",
+        "system": false,
+        "required": true,
+        "unique": true,
+        "options": {
+          "min": 3,
+          "max": 100,
+          "pattern": ""
+        }
+      },
+      {
+        "id": "description",
+        "name": "description",
+        "type": "text",
+        "system": false,
+        "required": false,
+        "unique": false,
+        "options": {
+          "max": 500,
+          "pattern": ""
+        }
+      },
+      {
+        "id": "color_code",
+        "name": "color_code",
+        "type": "text",
+        "system": false,
+        "required": false,
+        "unique": false,
+        "options": {
+          "max": 7,
+          "pattern": "^#[0-9A-Fa-f]{6}$"
+        }
+      },
+      {
+        "id": "category_type",
+        "name": "category_type",
+        "type": "select",
+        "system": false,
+        "required": true,
+        "unique": false,
+        "options": {
+          "maxSelect": 1,
+          "values": ["safe", "unsafe"]
+        }
+      }
+    ]
+  },
+  {
+    "id": "observations",
+    "name": "observations",
+    "type": "base",
+    "system": false,
+    "listRule": "(@request.auth.id != '') && (@request.auth.role_id in (select id from roles where slug in ('admin', 'supervisor', 'observer', 'auditor')) || observer_id = @request.auth.id)",
+    "viewRule": "(@request.auth.id != '') && (@request.auth.role_id in (select id from roles where slug in ('admin', 'supervisor', 'observer', 'auditor')) || observer_id = @request.auth.id)",
+    "createRule": "(@request.auth.id != '') && (@request.auth.role_id in (select id from roles where slug in ('admin', 'supervisor', 'observer')))",
+    "updateRule": "(@request.auth.id != '') && (@request.auth.role_id in (select id from roles where slug in ('admin', 'supervisor')) || observer_id = @request.auth.id)",
+    "deleteRule": "(@request.auth.id != '') && (@request.auth.role_id in (select id from roles where slug = 'admin'))",
+    "schema": [
+      {
+        "id": "observation_number",
+        "name": "observation_number",
+        "type": "text",
+        "system": false,
+        "required": true,
+        "unique": true,
+        "options": {
+          "pattern": ""
+        }
+      },
+      {
+        "id": "employee_id",
+        "name": "employee_id",
+        "type": "relation",
+        "system": false,
+        "required": true,
+        "unique": false,
+        "options": {
+          "collectionId": "employees",
+          "cascadeDelete": false,
+          "minSelect": null,
+          "maxSelect": 1,
+          "displayFields": ["first_name", "last_name"]
+        }
+      },
+      {
+        "id": "observer_id",
+        "name": "observer_id",
+        "type": "relation",
+        "system": false,
+        "required": true,
+        "unique": false,
+        "options": {
+          "collectionId": "users",
+          "cascadeDelete": false,
+          "minSelect": null,
+          "maxSelect": 1,
+          "displayFields": ["username"]
+        }
+      },
+      {
+        "id": "work_area_id",
+        "name": "work_area_id",
+        "type": "relation",
+        "system": false,
+        "required": true,
+        "unique": false,
+        "options": {
+          "collectionId": "work_areas",
+          "cascadeDelete": false,
+          "minSelect": null,
+          "maxSelect": 1,
+          "displayFields": ["name"]
+        }
+      },
+      {
+        "id": "observation_date",
+        "name": "observation_date",
+        "type": "date",
+        "system": false,
+        "required": true,
+        "unique": false,
+        "options": {}
+      },
+      {
+        "id": "duration_minutes",
+        "name": "duration_minutes",
+        "type": "number",
+        "system": false,
+        "required": true,
+        "unique": false,
+        "options": {
+          "min": 1,
+          "max": 480
+        }
+      },
+      {
+        "id": "has_safe_behaviors",
+        "name": "has_safe_behaviors",
+        "type": "bool",
+        "system": false,
+        "required": true,
+        "unique": false,
+        "options": {}
+      },
+      {
+        "id": "has_unsafe_behaviors",
+        "name": "has_unsafe_behaviors",
+        "type": "bool",
+        "system": false,
+        "required": true,
+        "unique": false,
+        "options": {}
+      },
+      {
+        "id": "overall_status",
+        "name": "overall_status",
+        "type": "select",
+        "system": false,
+        "required": true,
+        "unique": false,
+        "options": {
+          "maxSelect": 1,
+          "values": ["safe", "unsafe", "mixed"]
+        }
+      },
+      {
+        "id": "notes",
+        "name": "notes",
+        "type": "text",
+        "system": false,
+        "required": false,
+        "unique": false,
+        "options": {
+          "max": 1000,
+          "pattern": ""
+        }
+      }
+    ]
+  },
+  {
+    "id": "behaviors",
+    "name": "behaviors",
+    "type": "base",
+    "system": false,
+    "listRule": "(@request.auth.id != '') && (@request.auth.role_id in (select id from roles where slug in ('admin', 'supervisor', 'observer', 'auditor')))",
+    "viewRule": "(@request.auth.id != '') && (@request.auth.role_id in (select id from roles where slug in ('admin', 'supervisor', 'observer', 'auditor')))",
+    "createRule": "(@request.auth.id != '') && (@request.auth.role_id in (select id from roles where slug in ('admin', 'supervisor', 'observer')))",
+    "updateRule": "(@request.auth.id != '') && (@request.auth.role_id in (select id from roles where slug in ('admin', 'supervisor')))",
+    "deleteRule": "(@request.auth.id != '') && (@request.auth.role_id in (select id from roles where slug = 'admin'))",
+    "schema": [
+      {
+        "id": "observation_id",
+        "name": "observation_id",
+        "type": "relation",
+        "system": false,
+        "required": true,
+        "unique": false,
+        "options": {
+          "collectionId": "observations",
+          "cascadeDelete": true,
+          "minSelect": null,
+          "maxSelect": 1,
+          "displayFields": ["observation_number"]
+        }
+      },
+      {
+        "id": "behavior_category_id",
+        "name": "behavior_category_id",
+        "type": "relation",
+        "system": false,
+        "required": true,
+        "unique": false,
+        "options": {
+          "collectionId": "behavior_categories",
+          "cascadeDelete": false,
+          "minSelect": null,
+          "maxSelect": 1,
+          "displayFields": ["name"]
+        }
+      },
+      {
+        "id": "type",
+        "name": "type",
+        "type": "select",
+        "system": false,
+        "required": true,
+        "unique": false,
+        "options": {
+          "maxSelect": 1,
+          "values": ["safe", "unsafe"]
+        }
+      },
+      {
+        "id": "description",
+        "name": "description",
+        "type": "text",
+        "system": false,
+        "required": true,
+        "unique": false,
+        "options": {
+          "min": 10,
+          "max": 500,
+          "pattern": ""
+        }
+      },
+      {
+        "id": "severity",
+        "name": "severity",
+        "type": "select",
+        "system": false,
+        "required": false,
+        "unique": false,
+        "options": {
+          "maxSelect": 1,
+          "values": ["low", "medium", "high", "critical"]
+        }
+      }
+    ]
+  },
+  {
+    "id": "incidents",
+    "name": "incidents",
+    "type": "base",
+    "system": false,
+    "listRule": "@request.auth.id != ''",
+    "viewRule": "@request.auth.id != ''",
+    "createRule": "(@request.auth.id != '') && (@request.auth.role_id in (select id from roles where slug in ('admin', 'supervisor', 'observer')))",
+    "updateRule": "(@request.auth.id != '') && (@request.auth.role_id in (select id from roles where slug in ('admin', 'supervisor')))",
+    "deleteRule": "(@request.auth.id != '') && (@request.auth.role_id in (select id from roles where slug = 'admin'))",
+    "schema": [
+      {
+        "id": "incident_number",
+        "name": "incident_number",
+        "type": "text",
+        "system": false,
+        "required": true,
+        "unique": true,
+        "options": {
+          "pattern": ""
+        }
+      },
+      {
+        "id": "employee_id",
+        "name": "employee_id",
+        "type": "relation",
+        "system": false,
+        "required": true,
+        "unique": false,
+        "options": {
+          "collectionId": "employees",
+          "cascadeDelete": false,
+          "minSelect": null,
+          "maxSelect": 1,
+          "displayFields": ["first_name", "last_name"]
+        }
+      },
+      {
+        "id": "work_area_id",
+        "name": "work_area_id",
+        "type": "relation",
+        "system": false,
+        "required": true,
+        "unique": false,
+        "options": {
+          "collectionId": "work_areas",
+          "cascadeDelete": false,
+          "minSelect": null,
+          "maxSelect": 1,
+          "displayFields": ["name"]
+        }
+      },
+      {
+        "id": "incident_date",
+        "name": "incident_date",
+        "type": "date",
+        "system": false,
+        "required": true,
+        "unique": false,
+        "options": {}
+      },
+      {
+        "id": "incident_type",
+        "name": "incident_type",
+        "type": "select",
+        "system": false,
+        "required": true,
+        "unique": false,
+        "options": {
+          "maxSelect": 1,
+          "values": ["accident", "near_miss", "hazard"]
+        }
+      },
+      {
+        "id": "description",
+        "name": "description",
+        "type": "text",
+        "system": false,
+        "required": true,
+        "unique": false,
+        "options": {
+          "min": 20,
+          "max": 1000,
+          "pattern": ""
+        }
+      },
+      {
+        "id": "severity",
+        "name": "severity",
+        "type": "select",
+        "system": false,
+        "required": true,
+        "unique": false,
+        "options": {
+          "maxSelect": 1,
+          "values": ["low", "medium", "high", "critical", "fatal"]
+        }
+      },
+      {
+        "id": "status",
+        "name": "status",
+        "type": "select",
+        "system": false,
+        "required": true,
+        "unique": false,
+        "options": {
+          "maxSelect": 1,
+          "values": ["open", "under_investigation", "closed"]
+        }
+      },
+      {
+        "id": "reported_by_id",
+        "name": "reported_by_id",
+        "type": "relation",
+        "system": false,
+        "required": true,
+        "unique": false,
+        "options": {
+          "collectionId": "users",
+          "cascadeDelete": false,
+          "minSelect": null,
+          "maxSelect": 1,
+          "displayFields": ["username"]
+        }
+      }
+    ]
+  },
+  {
+    "id": "corrective_actions",
+    "name": "corrective_actions",
+    "type": "base",
+    "system": false,
+    "listRule": "@request.auth.id != ''",
+    "viewRule": "@request.auth.id != ''",
+    "createRule": "(@request.auth.id != '') && (@request.auth.role_id in (select id from roles where slug in ('admin', 'supervisor')))",
+    "updateRule": "(@request.auth.id != '') && (@request.auth.role_id in (select id from roles where slug in ('admin', 'supervisor')))",
+    "deleteRule": "(@request.auth.id != '') && (@request.auth.role_id in (select id from roles where slug = 'admin'))",
+    "schema": [
+      {
+        "id": "action_number",
+        "name": "action_number",
+        "type": "text",
+        "system": false,
+        "required": true,
+        "unique": true,
+        "options": {
+          "pattern": ""
+        }
+      },
+      {
+        "id": "incident_id",
+        "name": "incident_id",
+        "type": "relation",
+        "system": false,
+        "required": true,
+        "unique": false,
+        "options": {
+          "collectionId": "incidents",
+          "cascadeDelete": false,
+          "minSelect": null,
+          "maxSelect": 1,
+          "displayFields": ["incident_number"]
+        }
+      },
+      {
+        "id": "description",
+        "name": "description",
+        "type": "text",
+        "system": false,
+        "required": true,
+        "unique": false,
+        "options": {
+          "min": 20,
+          "max": 1000,
+          "pattern": ""
+        }
+      },
+      {
+        "id": "responsible_id",
+        "name": "responsible_id",
+        "type": "relation",
+        "system": false,
+        "required": true,
+        "unique": false,
+        "options": {
+          "collectionId": "users",
+          "cascadeDelete": false,
+          "minSelect": null,
+          "maxSelect": 1,
+          "displayFields": ["username"]
+        }
+      },
+      {
+        "id": "due_date",
+        "name": "due_date",
+        "type": "date",
+        "system": false,
+        "required": true,
+        "unique": false,
+        "options": {}
+      },
+      {
+        "id": "status",
+        "name": "status",
+        "type": "select",
+        "system": false,
+        "required": true,
+        "unique": false,
+        "options": {
+          "maxSelect": 1,
+          "values": ["open", "in_progress", "completed", "overdue"]
+        }
+      },
+      {
+        "id": "completion_date",
+        "name": "completion_date",
+        "type": "date",
+        "system": false,
+        "required": false,
+        "unique": false,
+        "options": {}
+      },
+      {
+        "id": "completion_notes",
+        "name": "completion_notes",
+        "type": "text",
+        "system": false,
+        "required": false,
+        "unique": false,
+        "options": {
+          "max": 500,
+          "pattern": ""
+        }
+      }
+    ]
+  },
+  {
+    "id": "attachments",
+    "name": "attachments",
+    "type": "base",
+    "system": false,
+    "listRule": "(@request.auth.id != '') && (@request.auth.role_id in (select id from roles where slug in ('admin', 'supervisor', 'observer', 'auditor')))",
+    "viewRule": "(@request.auth.id != '') && (@request.auth.role_id in (select id from roles where slug in ('admin', 'supervisor', 'observer', 'auditor')))",
+    "createRule": "(@request.auth.id != '') && (@request.auth.role_id in (select id from roles where slug in ('admin', 'supervisor', 'observer')))",
+    "deleteRule": "(@request.auth.id != '') && (@request.auth.role_id in (select id from roles where slug = 'admin'))",
+    "schema": [
+      {
+        "id": "file",
+        "name": "file",
+        "type": "file",
+        "system": false,
+        "required": true,
+        "unique": false,
+        "options": {
+          "maxSelect": 1,
+          "maxSize": 5242880,
+          "mimeTypes": []
+        }
+      },
+      {
+        "id": "entity_type",
+        "name": "entity_type",
+        "type": "select",
+        "system": false,
+        "required": true,
+        "unique": false,
+        "options": {
+          "maxSelect": 1,
+          "values": ["observation", "incident", "corrective_action"]
+        }
+      },
+      {
+        "id": "entity_id",
+        "name": "entity_id",
+        "type": "text",
+        "system": false,
+        "required": true,
+        "unique": false,
+        "options": {
+          "pattern": ""
+        }
+      },
+      {
+        "id": "uploaded_by_id",
+        "name": "uploaded_by_id",
+        "type": "relation",
+        "system": false,
+        "required": true,
+        "unique": false,
+        "options": {
+          "collectionId": "users",
+          "cascadeDelete": false,
+          "minSelect": null,
+          "maxSelect": 1,
+          "displayFields": ["username"]
+        }
+      }
+    ]
+  },
+  {
+    "id": "notifications",
+    "name": "notifications",
+    "type": "base",
+    "system": false,
+    "listRule": "(@request.auth.id != '') && (recipient_id = @request.auth.id || @request.auth.is_super_admin = true)",
+    "viewRule": "(@request.auth.id != '') && (recipient_id = @request.auth.id || @request.auth.is_super_admin = true)",
+    "createRule": "(@request.auth.id != '') && (@request.auth.role_id in (select id from roles where slug in ('admin', 'supervisor', 'system')))",
+    "deleteRule": "(@request.auth.id != '') && (@request.auth.role_id in (select id from roles where slug = 'admin'))",
+    "schema": [
+      {
+        "id": "recipient_id",
+        "name": "recipient_id",
+        "type": "relation",
+        "system": false,
+        "required": true,
+        "unique": false,
+        "options": {
+          "collectionId": "users",
+          "cascadeDelete": false,
+          "minSelect": null,
+          "maxSelect": 1,
+          "displayFields": ["username"]
+        }
+      },
+      {
+        "id": "notification_type",
+        "name": "notification_type",
+        "type": "select",
+        "system": false,
+        "required": true,
+        "unique": false,
+        "options": {
+          "maxSelect": 1,
+          "values": ["info", "warning", "critical", "success"]
+        }
+      },
+      {
+        "id": "title",
+        "name": "title",
+        "type": "text",
+        "system": false,
+        "required": true,
+        "unique": false,
+        "options": {
+          "min": 5,
+          "max": 200,
+          "pattern": ""
+        }
+      },
+      {
+        "id": "message",
+        "name": "message",
+        "type": "text",
+        "system": false,
+        "required": true,
+        "unique": false,
+        "options": {
+          "min": 10,
+          "max": 1000,
+          "pattern": ""
+        }
+      },
+      {
+        "id": "related_entity_type",
+        "name": "related_entity_type",
+        "type": "select",
+        "system": false,
+        "required": false,
+        "unique": false,
+        "options": {
+          "maxSelect": 1,
+          "values": ["observation", "incident", "corrective_action"]
+        }
+      },
+      {
+        "id": "related_entity_id",
+        "name": "related_entity_id",
+        "type": "text",
+        "system": false,
+        "required": false,
+        "unique": false,
+        "options": {
+          "pattern": ""
+        }
+      },
+      {
+        "id": "is_read",
+        "name": "is_read",
+        "type": "bool",
+        "system": false,
+        "required": false,
+        "unique": false,
+        "options": {}
+      }
+    ]
+  },
+  {
+    "id": "audit_logs",
+    "name": "audit_logs",
+    "type": "base",
+    "system": false,
+    "listRule": "(@request.auth.id != '') && (@request.auth.role_id in (select id from roles where slug in ('admin', 'auditor')))",
+    "viewRule": "(@request.auth.id != '') && (@request.auth.role_id in (select id from roles where slug in ('admin', 'auditor')))",
+    "createRule": null,
+    "deleteRule": "(@request.auth.id != '') && (@request.auth.role_id in (select id from roles where slug = 'admin'))",
+    "schema": [
+      {
+        "id": "user_id",
+        "name": "user_id",
+        "type": "relation",
+        "system": false,
+        "required": true,
+        "unique": false,
+        "options": {
+          "collectionId": "users",
+          "cascadeDelete": false,
+          "minSelect": null,
+          "maxSelect": 1,
+          "displayFields": ["username"]
+        }
+      },
+      {
+        "id": "action",
+        "name": "action",
+        "type": "select",
+        "system": false,
+        "required": true,
+        "unique": false,
+        "options": {
+          "maxSelect": 1,
+          "values": ["create", "read", "update", "delete", "export"]
+        }
+      },
+      {
+        "id": "entity_type",
+        "name": "entity_type",
+        "type": "text",
+        "system": false,
+        "required": true,
+        "unique": false,
+        "options": {
+          "pattern": ""
+        }
+      },
+      {
+        "id": "entity_id",
+        "name": "entity_id",
+        "type": "text",
+        "system": false,
+        "required": true,
+        "unique": false,
+        "options": {
+          "pattern": ""
+        }
+      },
+      {
+        "id": "old_values",
+        "name": "old_values",
+        "type": "json",
+        "system": false,
+        "required": false,
+        "unique": false,
+        "options": {}
+      },
+      {
+        "id": "new_values",
+        "name": "new_values",
+        "type": "json",
+        "system": false,
+        "required": false,
+        "unique": false,
+        "options": {}
+      },
+      {
+        "id": "status",
+        "name": "status",
+        "type": "select",
+        "system": false,
+        "required": true,
+        "unique": false,
+        "options": {
+          "maxSelect": 1,
+          "values": ["success", "error"]
+        }
+      },
+      {
+        "id": "ip_address",
+        "name": "ip_address",
+        "type": "text",
+        "system": false,
+        "required": false,
+        "unique": false,
+        "options": {
+          "pattern": ""
+        }
+      },
+      {
+        "id": "user_agent",
+        "name": "user_agent",
+        "type": "text",
+        "system": false,
+        "required": false,
+        "unique": false,
+        "options": {
+          "pattern": ""
+        }
+      }
+    ]
+  },
+  {
+    "id": "kpis",
+    "name": "kpis",
+    "type": "base",
+    "system": false,
+    "listRule": "(@request.auth.id != '') && (@request.auth.role_id in (select id from roles where slug in ('admin', 'supervisor', 'auditor')))",
+    "viewRule": "(@request.auth.id != '') && (@request.auth.role_id in (select id from roles where slug in ('admin', 'supervisor', 'auditor')))",
+    "createRule": null,
+    "deleteRule": "(@request.auth.id != '') && (@request.auth.role_id in (select id from roles where slug = 'admin'))",
+    "schema": [
+      {
+        "id": "kpi_code",
+        "name": "kpi_code",
+        "type": "text",
+        "system": false,
+        "required": true,
+        "unique": true,
+        "options": {
+          "pattern": ""
+        }
+      },
+      {
+        "id": "kpi_name",
+        "name": "kpi_name",
+        "type": "text",
+        "system": false,
+        "required": true,
+        "unique": false,
+        "options": {
+          "min": 5,
+          "max": 200,
+          "pattern": ""
+        }
+      },
+      {
+        "id": "work_area_id",
+        "name": "work_area_id",
+        "type": "relation",
+        "system": false,
+        "required": true,
+        "unique": false,
+        "options": {
+          "collectionId": "work_areas",
+          "cascadeDelete": false,
+          "minSelect": null,
+          "maxSelect": 1,
+          "displayFields": ["name"]
+        }
+      },
+      {
+        "id": "period",
+        "name": "period",
+        "type": "select",
+        "system": false,
+        "required": true,
+        "unique": false,
+        "options": {
+          "maxSelect": 1,
+          "values": ["daily", "weekly", "monthly", "yearly"]
+        }
+      },
+      {
+        "id": "period_start",
+        "name": "period_start",
+        "type": "date",
+        "system": false,
+        "required": true,
+        "unique": false,
+        "options": {}
+      },
+      {
+        "id": "period_end",
+        "name": "period_end",
+        "type": "date",
+        "system": false,
+        "required": true,
+        "unique": false,
+        "options": {}
+      },
+      {
+        "id": "total_observations",
+        "name": "total_observations",
+        "type": "number",
+        "system": false,
+        "required": true,
+        "unique": false,
+        "options": {
+          "min": 0,
+          "max": null
+        }
+      },
+      {
+        "id": "safe_behaviors_count",
+        "name": "safe_behaviors_count",
+        "type": "number",
+        "system": false,
+        "required": true,
+        "unique": false,
+        "options": {
+          "min": 0,
+          "max": null
+        }
+      },
+      {
+        "id": "unsafe_behaviors_count",
+        "name": "unsafe_behaviors_count",
+        "type": "number",
+        "system": false,
+        "required": true,
+        "unique": false,
+        "options": {
+          "min": 0,
+          "max": null
+        }
+      },
+      {
+        "id": "safe_percentage",
+        "name": "safe_percentage",
+        "type": "number",
+        "system": false,
+        "required": true,
+        "unique": false,
+        "options": {
+          "min": 0,
+          "max": 100
+        }
+      },
+      {
+        "id": "unsafe_percentage",
+        "name": "unsafe_percentage",
+        "type": "number",
+        "system": false,
+        "required": true,
+        "unique": false,
+        "options": {
+          "min": 0,
+          "max": 100
+        }
+      },
+      {
+        "id": "calculated_at",
+        "name": "calculated_at",
+        "type": "date",
+        "system": false,
+        "required": true,
+        "unique": false,
+        "options": {}
+      }
+    ]
+  },
+  {
+    "id": "reports",
+    "name": "reports",
+    "type": "base",
+    "system": false,
+    "listRule": "(@request.auth.id != '') && (@request.auth.role_id in (select id from roles where slug in ('admin', 'supervisor', 'auditor')))",
+    "viewRule": "(@request.auth.id != '') && (@request.auth.role_id in (select id from roles where slug in ('admin', 'supervisor', 'auditor')))",
+    "createRule": "(@request.auth.id != '') && (@request.auth.role_id in (select id from roles where slug in ('admin', 'supervisor')))",
+    "deleteRule": "(@request.auth.id != '') && (@request.auth.role_id in (select id from roles where slug = 'admin'))",
+    "schema": [
+      {
+        "id": "report_number",
+        "name": "report_number",
+        "type": "text",
+        "system": false,
+        "required": true,
+        "unique": true,
+        "options": {
+          "pattern": ""
+        }
+      },
+      {
+        "id": "report_type",
+        "name": "report_type",
+        "type": "select",
+        "system": false,
+        "required": true,
+        "unique": false,
+        "options": {
+          "maxSelect": 1,
+          "values": ["observations", "incidents", "kpis", "compliance"]
+        }
+      },
+      {
+        "id": "period_start",
+        "name": "period_start",
+        "type": "date",
+        "system": false,
+        "required": true,
+        "unique": false,
+        "options": {}
+      },
+      {
+        "id": "period_end",
+        "name": "period_end",
+        "type": "date",
+        "system": false,
+        "required": true,
+        "unique": false,
+        "options": {}
+      },
+      {
+        "id": "work_area_id",
+        "name": "work_area_id",
+        "type": "relation",
+        "system": false,
+        "required": false,
+        "unique": false,
+        "options": {
+          "collectionId": "work_areas",
+          "cascadeDelete": false,
+          "minSelect": null,
+          "maxSelect": 1,
+          "displayFields": ["name"]
+        }
+      },
+      {
+        "id": "generated_by_id",
+        "name": "generated_by_id",
+        "type": "relation",
+        "system": false,
+        "required": true,
+        "unique": false,
+        "options": {
+          "collectionId": "users",
+          "cascadeDelete": false,
+          "minSelect": null,
+          "maxSelect": 1,
+          "displayFields": ["username"]
+        }
+      },
+      {
+        "id": "file_url",
+        "name": "file_url",
+        "type": "text",
+        "system": false,
+        "required": false,
+        "unique": false,
+        "options": {
+          "pattern": ""
+        }
+      },
+      {
+        "id": "status",
+        "name": "status",
+        "type": "select",
+        "system": false,
+        "required": true,
+        "unique": false,
+        "options": {
+          "maxSelect": 1,
+          "values": ["pending", "generating", "completed", "error"]
+        }
+      }
+    ]
+  }
+]

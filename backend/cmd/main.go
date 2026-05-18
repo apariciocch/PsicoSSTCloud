@@ -1,4 +1,3 @@
-package cmd
 package main
 
 import (

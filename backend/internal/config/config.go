@@ -3,6 +3,7 @@ package config
 import (
 	"os"
 	"strconv"
+	"strings"
 
 	"github.com/joho/godotenv"
 )
@@ -160,14 +161,15 @@ func getEnvInt(key string, defaultValue int) int {
 
 func splitEnv(key, defaultValue string) []string {
 	if value, exists := os.LookupEnv(key); exists {
-		parts := make([]string, 0)
+		parts := strings.Split(value, ",")
+		result := make([]string, 0)
 		for _, part := range parts {
-			if p := part; p != "" {
-				parts = append(parts, p)
+			if p := strings.TrimSpace(part); p != "" {
+				result = append(result, p)
 			}
 		}
-		if len(parts) > 0 {
-			return parts
+		if len(result) > 0 {
+			return result
 		}
 	}
 	return []string{defaultValue}

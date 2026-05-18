@@ -1,5 +1,4 @@
 package jwt
-package jwt
 
 import (
 	"fmt"
@@ -21,16 +20,16 @@ type CustomClaims struct {
 
 // Manager gestiona operaciones JWT
 type Manager struct {
-	secret           string
-	expiration       int
+	secret            string
+	expiration        int
 	refreshExpiration int
 }
 
 // NewManager crea una nueva instancia del manager JWT
 func NewManager(secret string, expiration, refreshExpiration int) *Manager {
 	return &Manager{
-		secret:           secret,
-		expiration:       expiration,
+		secret:            secret,
+		expiration:        expiration,
 		refreshExpiration: refreshExpiration,
 	}
 }
@@ -90,7 +89,7 @@ func (m *Manager) GenerateRefreshToken(userID string) (string, int, error) {
 // ValidateToken valida y parsea un token
 func (m *Manager) ValidateToken(tokenString string) (*CustomClaims, error) {
 	claims := &CustomClaims{}
-	
+
 	token, err := jwt.ParseWithClaims(tokenString, claims, func(token *jwt.Token) (interface{}, error) {
 		if _, ok := token.Method.(*jwt.SigningMethodHMAC); !ok {
 			return nil, fmt.Errorf("unexpected signing method: %v", token.Header["alg"])

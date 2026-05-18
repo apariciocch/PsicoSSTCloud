@@ -1,5 +1,4 @@
 package middleware
-package middleware
 
 import (
 	"context"
@@ -7,15 +6,15 @@ import (
 	"net/http"
 	"strings"
 
-	"github.com/apariciocch/psicosstcloud/internal/service/jwt"
 	"github.com/apariciocch/psicosstcloud/internal/pkg/response"
+	"github.com/apariciocch/psicosstcloud/internal/service/jwt"
 )
 
 const (
-	UserIDKey = "user_id"
-	RoleIDKey = "role_id"
-	EmailKey  = "email"
-	PermissionsKey = "permissions"
+	UserIDKey       = "user_id"
+	RoleIDKey       = "role_id"
+	EmailKey        = "email"
+	PermissionsKey  = "permissions"
 	IsSuperAdminKey = "is_super_admin"
 )
 
@@ -112,9 +111,9 @@ func GetUserIDFromContext(r *http.Request) (string, error) {
 // GetUserFromContext obtiene datos de usuario del contexto
 func GetUserFromContext(r *http.Request) map[string]interface{} {
 	return map[string]interface{}{
-		"user_id": r.Context().Value(UserIDKey),
-		"role_id": r.Context().Value(RoleIDKey),
-		"email": r.Context().Value(EmailKey),
+		"user_id":        r.Context().Value(UserIDKey),
+		"role_id":        r.Context().Value(RoleIDKey),
+		"email":          r.Context().Value(EmailKey),
 		"is_super_admin": r.Context().Value(IsSuperAdminKey),
 	}
 }

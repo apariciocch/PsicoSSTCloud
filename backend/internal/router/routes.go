@@ -1,5 +1,4 @@
 package router
-package router
 
 import (
 	"net/http"
@@ -7,7 +6,7 @@ import (
 	"github.com/apariciocch/psicosstcloud/internal/config"
 	"github.com/apariciocch/psicosstcloud/internal/handler"
 	"github.com/apariciocch/psicosstcloud/internal/middleware"
-	"github.com/apariciocch/psicosstcloud/internal/service"
+	"github.com/apariciocch/psicosstcloud/internal/service/jwt"
 	"github.com/go-chi/chi/v5"
 )
 
